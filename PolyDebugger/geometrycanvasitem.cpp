@@ -19,10 +19,17 @@ void GeometryCanvasItem::updateCoordMatrices(qreal width, qreal height)
     m_uiToRealCoord = m_realToUICoord.inverted();
 }
 
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0) && QT_VERSION < QT_VERSION_CHECK(6, 1, 0))
 void GeometryCanvasItem::geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry)
 {
-    Q_UNUSED(oldGeometry)
     QQuickItem::geometryChanged(newGeometry, oldGeometry);
+#elif (QT_VERSION >= QT_VERSION_CHECK(6, 1, 0))
+void GeometryCanvasItem::geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry)
+{
+    QQuickItem::geometryChange(newGeometry, oldGeometry);
+#endif
+    Q_UNUSED(oldGeometry)
+
     updateCoordMatrices(newGeometry.width(), newGeometry.height());
     update();
 }

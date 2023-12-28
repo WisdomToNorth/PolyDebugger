@@ -19,7 +19,13 @@ protected:
     QMatrix4x4 m_realToUICoord;
     QMatrix4x4 m_uiToRealCoord;
     void updateCoordMatrices(qreal width, qreal height);
+
+#if (QT_VERSION >= QT_VERSION_CHECK(5, 6, 0) && QT_VERSION < QT_VERSION_CHECK(6, 1, 0))
     void geometryChanged(const QRectF &newGeometry, const QRectF &oldGeometry) override;
+#elif (QT_VERSION >= QT_VERSION_CHECK(6, 1, 0))
+    void geometryChange(const QRectF &newGeometry, const QRectF &oldGeometry)override;
+#endif
+
     QPointF convertToGlobalUICoord(const cavc::Vector2<double> &pt);
     std::size_t vertexUnderPosition(QPointF uiGlobalPos, const cavc::Polyline<double> &pline);
 };

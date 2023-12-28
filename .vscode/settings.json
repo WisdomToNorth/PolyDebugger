@@ -115,7 +115,9 @@
         "xhash": "cpp",
         "xstring": "cpp",
         "xtree": "cpp",
-        "qplaintextedit": "cpp"
+        "qplaintextedit": "cpp",
+        "__tree": "cpp",
+        "stack": "cpp"
     },
     "[qml]": {
         "editor.defaultFormatter": "Delgan.qml-format",
