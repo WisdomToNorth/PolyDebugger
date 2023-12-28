@@ -1,0 +1,10 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>GeometrySceneView.qml</file>
+        <file>PlineOffsetScene.qml</file>
+        <file>PlineCombineScene.qml</file>
+        <file>HilbertCurveScene.qml</file>
+        <file>PlineOffsetIslandsScene.qml</file>
+    </qresource>
+</RCC>
