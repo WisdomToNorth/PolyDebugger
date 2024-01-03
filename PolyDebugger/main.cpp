@@ -1,46 +1,53 @@
-#include "demofuncs.h"
-#include "plinecombinealgorithmview.h"
-#include "plineoffsetalgorithmview.h"
-#include "plineoffsetislandsalgorithmview.h"
 #include <QGuiApplication>
 #include <QQmlApplicationEngine>
 #include <QQmlContext>
 #include <QSurfaceFormat>
 
-int main(int argc, char *argv[]) {
-  qmlRegisterSingletonType<DemoFuncs>("DemoFuncs", 1, 0, "DemoFuncs",
-                                      [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject * {
-                                        Q_UNUSED(engine)
-                                        Q_UNUSED(scriptEngine)
+#include "combine/plinecombinealgorithmview.h"
+#include "hilbert/demofuncs.h"
+#include "offsetisland/plineoffsetislandsalgorithmview.h"
+#include "plineoffsetalgorithmview.h"
 
-                                        DemoFuncs *demoFuncs = new DemoFuncs();
-                                        return demoFuncs;
-                                      });
+int main(int argc, char *argv[])
+{
+    qmlRegisterSingletonType<DemoFuncs>("DemoFuncs", 1, 0, "DemoFuncs",
+                                        [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject *
+                                        {
+                                            Q_UNUSED(engine)
+                                            Q_UNUSED(scriptEngine)
 
-  qmlRegisterType<PlineOffsetAlgorithmView>("Polyline", 1, 0, "PlineOffsetAlgorithmView");
-  qmlRegisterType<PlineCombineAlgorithmView>("Polyline", 1, 0, "PlineCombineAlgorithmView");
-  qmlRegisterType<PlineOffsetIslandsAlgorithmView>("Polyline", 1, 0, "PlineOffsetIslandsAlgorithmView");
+                                            DemoFuncs *demoFuncs = new DemoFuncs();
+                                            return demoFuncs;
+                                        });
 
-  QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
+    qmlRegisterType<PlineOffsetAlgorithmView>("Polyline", 1, 0, "PlineOffsetAlgorithmView");
+    qmlRegisterType<PlineCombineAlgorithmView>("Polyline", 1, 0, "PlineCombineAlgorithmView");
+    qmlRegisterType<PlineOffsetIslandsAlgorithmView>("Polyline", 1, 0,
+                                                     "PlineOffsetIslandsAlgorithmView");
 
-  QGuiApplication app(argc, argv);
-  QFont defaultFont(app.font().family(), 12);
-  app.setFont(defaultFont);
+    QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 
-  QSurfaceFormat format;
-  format.setSamples(16);
-  QSurfaceFormat::setDefaultFormat(format);
+    QGuiApplication app(argc, argv);
+    QFont defaultFont(app.font().family(), 12);
+    app.setFont(defaultFont);
 
-  QQmlApplicationEngine engine;
+    QSurfaceFormat format;
+    format.setSamples(16);
+    QSurfaceFormat::setDefaultFormat(format);
 
-  const QUrl url(QStringLiteral("qrc:/main.qml"));
-  QObject::connect(&engine, &QQmlApplicationEngine::objectCreated, &app,
-                   [url](QObject *obj, const QUrl &objUrl) {
-                     if (!obj && url == objUrl)
-                       QCoreApplication::exit(-1);
-                   },
-                   Qt::QueuedConnection);
-  engine.load(url);
+    QQmlApplicationEngine engine;
 
-  return app.exec();
+    const QUrl url(QStringLiteral("qrc:/main.qml"));
+    QObject::connect(
+        &engine, &QQmlApplicationEngine::objectCreated, &app,
+        [url](QObject *obj, const QUrl &objUrl)
+        {
+            if (!obj && url == objUrl)
+                QCoreApplication::exit(-1);
+        },
+        Qt::QueuedConnection);
+
+    engine.load(url);
+
+    return app.exec();
 }

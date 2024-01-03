@@ -3,6 +3,7 @@
 
 #include "cavc/polyline.hpp"
 #include "geometrycanvasitem.h"
+
 class PolylineNode;
 class PointSetNode;
 class RawOffsetSegmentsNode;

@@ -1,4 +1,4 @@
-#include "plinecombinealgorithmview.h"
+#include "combine/plinecombinealgorithmview.h"
 
 #include <QSGGeometryNode>
 #include <QSGOpacityNode>

@@ -3,8 +3,8 @@
         <file>main.qml</file>
         <file>GeometrySceneView.qml</file>
         <file>PlineOffsetScene.qml</file>
-        <file>PlineCombineScene.qml</file>
-        <file>HilbertCurveScene.qml</file>
-        <file>PlineOffsetIslandsScene.qml</file>
+        <file>combine/PlineCombineScene.qml</file>
+        <file>hilbert/HilbertCurveScene.qml</file>
+        <file>offsetisland/PlineOffsetIslandsScene.qml</file>
     </qresource>
 </RCC>

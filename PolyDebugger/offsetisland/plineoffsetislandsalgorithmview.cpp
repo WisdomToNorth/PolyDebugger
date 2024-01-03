@@ -1,4 +1,4 @@
-#include "plineoffsetislandsalgorithmview.h"
+#include "offsetisland/plineoffsetislandsalgorithmview.h"
 
 #include <QSGTransformNode>
 
