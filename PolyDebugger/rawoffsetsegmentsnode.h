@@ -12,7 +12,7 @@
 class RawOffsetSegmentsNode : public QSGOpacityNode
 {
 public:
-    RawOffsetSegmentsNode();
+    RawOffsetSegmentsNode(){};
     void
     updateGeometry(std::vector<cavc::internal::PlineOffsetSegment<double>> const &rawOffsetSegments,
                    double arcApproxError);

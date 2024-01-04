@@ -34,35 +34,38 @@ add_executable(PolyGui
     combine/plinecombinealgorithmview.h
     combine/PlineCombineScene.qml
 
-    plinesegmentnode.cpp
-    polylinenode.cpp
-    flatcolorgeometrynode.cpp
-    geometrycanvasitem.cpp
+    offset/plineoffsetalgorithmview.cpp
+    offset/plineoffsetalgorithmview.h
+    offset/PlineOffsetScene.qml
+
     hilbert/demofuncs.cpp
-    simplecirclenode.cpp
-    graphicshelpers.cpp
-    spatialindexboundingboxesnode.cpp
-    main.cpp
-    rawoffsetsegmentsnode.cpp
-    plineoffsetalgorithmview.cpp
-    pointsetnode.cpp
-    graphicshelpers.h
-    spatialindexboundingboxesnode.h
-    geometrycanvasitem.h
-    plineoffsetalgorithmview.h
-    flatcolorgeometrynode.h
-    polylinenode.h
-    simplecirclenode.h
     hilbert/demofuncs.h
-    plinesegmentnode.h
-    rawoffsetsegmentsnode.h
-    pointsetnode.h
-    PlineOffsetScene.qml
-    GeometrySceneView.qml
-    main.qml
     hilbert/HilbertCurveScene.qml
+
+    flatcolorgeometrynode.cpp
+    rawoffsetsegmentsnode.cpp
+    geometrycanvasitem.cpp
+    simplecirclenode.cpp
+    pointsetnode.cpp
+    graphicshelpers.cpp
+    plinesegmentnode.cpp
+    main.cpp
+    polylinenode.cpp
+    polylinenode.h
+    graphicshelpers.h
+    plinesegmentnode.h
+    simplecirclenode.h
+    pointsetnode.h
+    geometrycanvasitem.h
+    spatialindexboundingboxesnode.h
+    rawoffsetsegmentsnode.h
+    flatcolorgeometrynode.h
+    main.qml
+    GeometrySceneView.qml
     qml.qrc
-)
+    )
+
+#target_include_directories(InteractiveUI PUBLIC ${PROJECT_SOURCE_DIR}/build/include)
 
 target_compile_definitions(PolyGui
   PRIVATE $<$<OR:$<CONFIG:Debug>,$<CONFIG:RelWithDebInfo>>:QT_QML_DEBUG>)

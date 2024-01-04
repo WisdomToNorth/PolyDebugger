@@ -5,8 +5,8 @@
 
 #include "combine/plinecombinealgorithmview.h"
 #include "hilbert/demofuncs.h"
+#include "offset/plineoffsetalgorithmview.h"
 #include "offsetisland/plineoffsetislandsalgorithmview.h"
-#include "plineoffsetalgorithmview.h"
 
 int main(int argc, char *argv[])
 {

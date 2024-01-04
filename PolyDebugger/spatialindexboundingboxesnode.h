@@ -10,12 +10,12 @@
 class SpatialIndexBoundingBoxesNode : public QSGOpacityNode
 {
 public:
-    SpatialIndexBoundingBoxesNode();
+    SpatialIndexBoundingBoxesNode(){};
+
     template <typename Real, std::size_t N>
     void updateGeometry(cavc::StaticSpatialIndex<Real, N> const &spatialIndex)
     {
         auto bbNode = static_cast<FlatColorGeometryNode *>(this->firstChild());
-
         auto bbVisitor = [&](std::size_t level, Real minX, Real minY, Real maxX, Real maxY)
         {
             if (!bbNode)
