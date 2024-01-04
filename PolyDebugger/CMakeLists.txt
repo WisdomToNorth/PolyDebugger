@@ -34,6 +34,10 @@ add_executable(PolyGui
     combine/plinecombinealgorithmview.h
     combine/PlineCombineScene.qml
 
+    offset/plineoffsetalgorithmview.cpp
+    offset/plineoffsetalgorithmview.h
+    offset/PlineOffsetScene.qml
+
     plinesegmentnode.cpp
     polylinenode.cpp
     flatcolorgeometrynode.cpp
@@ -41,15 +45,12 @@ add_executable(PolyGui
     hilbert/demofuncs.cpp
     simplecirclenode.cpp
     graphicshelpers.cpp
-    spatialindexboundingboxesnode.cpp
     main.cpp
     rawoffsetsegmentsnode.cpp
-    plineoffsetalgorithmview.cpp
     pointsetnode.cpp
     graphicshelpers.h
     spatialindexboundingboxesnode.h
     geometrycanvasitem.h
-    plineoffsetalgorithmview.h
     flatcolorgeometrynode.h
     polylinenode.h
     simplecirclenode.h
@@ -57,7 +58,6 @@ add_executable(PolyGui
     plinesegmentnode.h
     rawoffsetsegmentsnode.h
     pointsetnode.h
-    PlineOffsetScene.qml
     GeometrySceneView.qml
     main.qml
     hilbert/HilbertCurveScene.qml

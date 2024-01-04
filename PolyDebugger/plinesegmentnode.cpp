@@ -1,10 +1,6 @@
 #include "plinesegmentnode.h"
 
 #include "graphicshelpers.h"
-using namespace cavc;
-PlineSegmentNode::PlineSegmentNode()
-{
-}
 
 void PlineSegmentNode::updateGeometry(const cavc::PlineVertex<double> &v1,
                                       const cavc::PlineVertex<double> &v2, double arcApproxError)
@@ -20,7 +16,7 @@ void PlineSegmentNode::updateGeometry(const cavc::PlineVertex<double> &v1,
     else
     {
         auto arc = arcRadiusAndCenter(v1, v2);
-        if (arc.radius < arcApproxError + utils::realThreshold<double>())
+        if (arc.radius < arcApproxError + cavc::utils::realThreshold<double>())
         {
             m_geometry.allocate(static_cast<int>(1));
             m_geometry.vertexDataAsPoint2D()[0].set(static_cast<float>(v1.x()),
@@ -30,7 +26,7 @@ void PlineSegmentNode::updateGeometry(const cavc::PlineVertex<double> &v1,
         {
             auto startAngle = angle(arc.center, v1.pos());
             auto endAngle = angle(arc.center, v2.pos());
-            double deltaAngle = std::abs(utils::deltaAngle(startAngle, endAngle));
+            double deltaAngle = std::abs(cavc::utils::deltaAngle(startAngle, endAngle));
 
             double segmentSubAngle = std::abs(2.0 * std::acos(1.0 - arcApproxError / arc.radius));
             std::size_t segmentCount =

@@ -1,9 +1,5 @@
 #include "rawoffsetsegmentsnode.h"
 
-RawOffsetSegmentsNode::RawOffsetSegmentsNode()
-{
-}
-
 void RawOffsetSegmentsNode::updateGeometry(
     const std::vector<cavc::internal::PlineOffsetSegment<double>> &rawOffsetSegments,
     double arcApproxError)
