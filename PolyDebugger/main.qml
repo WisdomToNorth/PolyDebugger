@@ -11,8 +11,9 @@ ApplicationWindow {
     id: mainWindow
 
     visible: true
-    width: 1680
-    height: 1050
+    width: Screen.width-100
+    height: Screen.height-100
+
     title: qsTr("Cavalier Contours")
 
     Page {
