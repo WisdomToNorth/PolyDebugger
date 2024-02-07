@@ -3,8 +3,8 @@
 
 #include <vector>
 
+#include "adaptor/geometrycanvasitem.h"
 #include "cavc/polyline.hpp"
-#include "geometrycanvasitem.h"
 
 class PolylineNode;
 class QSGOpacityNode;

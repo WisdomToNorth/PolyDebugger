@@ -23,7 +23,8 @@ elseif(UNIX)
   set(Qt_LIBRARY_DIR ${Qt5_LIBRARY_DIR})
 endif()
 
-include_directories(${PROJECT_SOURCE_DIR}/build/include)
+include_directories(${PROJECT_SOURCE_DIR}/build/include
+                    ${PROJECT_SOURCE_DIR}/PolyDebugger)
 
 add_executable(PolyGui
     offsetisland/plineoffsetislandsalgorithmview.cpp
@@ -38,26 +39,29 @@ add_executable(PolyGui
     offset/plineoffsetalgorithmview.h
     offset/PlineOffsetScene.qml
 
-    plinesegmentnode.cpp
-    polylinenode.cpp
-    flatcolorgeometrynode.cpp
-    geometrycanvasitem.cpp
     hilbert/demofuncs.cpp
-    simplecirclenode.cpp
-    graphicshelpers.cpp
-    main.cpp
-    rawoffsetsegmentsnode.cpp
-    pointsetnode.cpp
-    graphicshelpers.h
-    spatialindexboundingboxesnode.h
-    geometrycanvasitem.h
-    flatcolorgeometrynode.h
-    polylinenode.h
-    simplecirclenode.h
     hilbert/demofuncs.h
-    plinesegmentnode.h
-    rawoffsetsegmentsnode.h
-    pointsetnode.h
+
+    adaptor/geometrycanvasitem.cpp
+    adaptor/geometrycanvasitem.h
+    adaptor/plinesegmentnode.cpp
+    adaptor/plinesegmentnode.h
+    adaptor/pointsetnode.cpp
+    adaptor/pointsetnode.h
+    adaptor/polylinenode.cpp
+    adaptor/polylinenode.h
+    adaptor/rawoffsetsegmentsnode.cpp
+    adaptor/rawoffsetsegmentsnode.h
+    adaptor/spatialindexboundingboxesnode.h
+
+    flatcolorgeometrynode.cpp
+    flatcolorgeometrynode.h
+    graphicshelpers.cpp
+    graphicshelpers.h
+    main.cpp
+    simplecirclenode.cpp
+    simplecirclenode.h
+
     GeometrySceneView.qml
     main.qml
     hilbert/HilbertCurveScene.qml

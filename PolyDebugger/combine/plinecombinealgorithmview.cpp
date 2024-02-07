@@ -4,11 +4,11 @@
 #include <QSGOpacityNode>
 #include <QSGTransformNode>
 
+#include "adaptor/pointsetnode.h"
+#include "adaptor/polylinenode.h"
 #include "cavc/polylinecombine.hpp"
 #include "cavc/polylineintersects.hpp"
 #include "graphicshelpers.h"
-#include "pointsetnode.h"
-#include "polylinenode.h"
 
 using namespace cavc;
 

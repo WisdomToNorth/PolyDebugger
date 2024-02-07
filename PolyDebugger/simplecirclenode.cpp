@@ -1,6 +1,6 @@
 #include "simplecirclenode.h"
 
-#include "cavc/mathutils.hpp"
+#include <cmath>
 
 SimpleCircleNode::SimpleCircleNode() : FlatColorGeometryNode(true)
 {
@@ -18,6 +18,21 @@ void SimpleCircleNode::setGeometry(qreal x, qreal y, qreal radius)
     updateGeometry();
 }
 
+namespace internal
+{
+template <typename Real>
+constexpr Real pi()
+{
+    return Real(3.14159265358979323846264338327950288);
+}
+
+template <typename Real>
+constexpr Real tau()
+{
+    return Real(2) * pi<Real>();
+}
+} // namespace internal
+
 void SimpleCircleNode::updateGeometry()
 {
     int surroundingVertexes = 12;
@@ -34,7 +49,7 @@ void SimpleCircleNode::updateGeometry()
     vertexData[0].set(m_xPos, m_yPos);
     for (int i = 1; i < vertexCount; ++i)
     {
-        double angle = cavc::utils::tau<double>() * static_cast<double>(i - 1)
+        double angle = internal::tau<double>() * static_cast<double>(i - 1)
                        / static_cast<double>(surroundingVertexes);
         vertexData[i].set(m_xPos + m_radius * std::cos(angle), m_yPos + m_radius * std::sin(angle));
     }

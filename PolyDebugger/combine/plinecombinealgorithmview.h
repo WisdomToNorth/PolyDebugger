@@ -1,8 +1,8 @@
 #ifndef PLINECOMBINEALGORITHMVIEW_H
 #define PLINECOMBINEALGORITHMVIEW_H
 
+#include "adaptor/geometrycanvasitem.h"
 #include "cavc/polyline.hpp"
-#include "geometrycanvasitem.h"
 
 class PolylineNode;
 class PointSetNode;

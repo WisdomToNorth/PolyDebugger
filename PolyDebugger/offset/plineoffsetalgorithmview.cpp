@@ -4,14 +4,14 @@
 #include <QSGNode>
 #include <QSGTransformNode>
 
+#include "adaptor/plinesegmentnode.h"
+#include "adaptor/pointsetnode.h"
+#include "adaptor/polylinenode.h"
+#include "adaptor/rawoffsetsegmentsnode.h"
+#include "adaptor/spatialindexboundingboxesnode.h"
 #include "cavc/internal/diagnostics.hpp"
 #include "cavc/polylineoffset.hpp"
 #include "graphicshelpers.h"
-#include "plinesegmentnode.h"
-#include "pointsetnode.h"
-#include "polylinenode.h"
-#include "rawoffsetsegmentsnode.h"
-#include "spatialindexboundingboxesnode.h"
 using namespace cavc;
 
 PlineOffsetAlgorithmView::PlineOffsetAlgorithmView(QQuickItem *parent) :

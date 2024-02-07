@@ -11,10 +11,14 @@ ApplicationWindow {
     id: mainWindow
 
     visible: true
-    width: Screen.width-100
-    height: Screen.height-100
-
+    width: Screen.width - 200
+    height: Screen.height - 200
     title: qsTr("Cavalier Contours")
+
+    font {
+        family: "Consolas"
+        pointSize: 20
+    }
 
     Page {
         anchors.fill: parent

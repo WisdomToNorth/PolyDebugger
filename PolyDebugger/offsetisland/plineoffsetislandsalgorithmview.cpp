@@ -2,8 +2,8 @@
 
 #include <QSGTransformNode>
 
+#include "adaptor/polylinenode.h"
 #include "cavc/polylineoffsetislands.hpp"
-#include "polylinenode.h"
 
 using namespace cavc;
 
