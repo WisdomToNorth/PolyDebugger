@@ -3,27 +3,28 @@
 #include <QQmlContext>
 #include <QSurfaceFormat>
 
-#include "combine/plinecombinealgorithmview.h"
-#include "hilbert/demofuncs.h"
 #include "offset/plineoffsetalgorithmview.h"
-#include "offsetisland/plineoffsetislandsalgorithmview.h"
+// #include "combine/plinecombinealgorithmview.h"
+// #include "hilbert/demofuncs.h"
+// #include "offsetisland/plineoffsetislandsalgorithmview.h"
 
 int main(int argc, char *argv[])
 {
-    qmlRegisterSingletonType<DemoFuncs>("DemoFuncs", 1, 0, "DemoFuncs",
-                                        [](QQmlEngine *engine, QJSEngine *scriptEngine) -> QObject *
-                                        {
-                                            Q_UNUSED(engine)
-                                            Q_UNUSED(scriptEngine)
+    // qmlRegisterSingletonType<DemoFuncs>("DemoFuncs", 1, 0, "DemoFuncs",
+    //                                     [](QQmlEngine *engine, QJSEngine *scriptEngine) ->
+    //                                     QObject *
+    //                                     {
+    //                                         Q_UNUSED(engine)
+    //                                         Q_UNUSED(scriptEngine)
 
-                                            DemoFuncs *demoFuncs = new DemoFuncs();
-                                            return demoFuncs;
-                                        });
+    //                                         DemoFuncs *demoFuncs = new DemoFuncs();
+    //                                         return demoFuncs;
+    //                                     });
+    // qmlRegisterType<PlineCombineAlgorithmView>("Polyline", 1, 0, "PlineCombineAlgorithmView");
+    // qmlRegisterType<PlineOffsetIslandsAlgorithmView>("Polyline", 1, 0,
+    //                                                  "PlineOffsetIslandsAlgorithmView");
 
     qmlRegisterType<PlineOffsetAlgorithmView>("Polyline", 1, 0, "PlineOffsetAlgorithmView");
-    qmlRegisterType<PlineCombineAlgorithmView>("Polyline", 1, 0, "PlineCombineAlgorithmView");
-    qmlRegisterType<PlineOffsetIslandsAlgorithmView>("Polyline", 1, 0,
-                                                     "PlineOffsetIslandsAlgorithmView");
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 

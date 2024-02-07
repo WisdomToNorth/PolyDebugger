@@ -9,9 +9,11 @@
 #include "adaptor/polylinenode.h"
 #include "adaptor/rawoffsetsegmentsnode.h"
 #include "adaptor/spatialindexboundingboxesnode.h"
+#include "graphicshelpers.h"
+
 #include "cavc/internal/diagnostics.hpp"
 #include "cavc/polylineoffset.hpp"
-#include "graphicshelpers.h"
+
 using namespace cavc;
 
 PlineOffsetAlgorithmView::PlineOffsetAlgorithmView(QQuickItem *parent) :
@@ -27,18 +29,18 @@ PlineOffsetAlgorithmView::PlineOffsetAlgorithmView(QQuickItem *parent) :
     m_showEndPointIntersectCircles(false), m_showDualRawOffsetPolyline(false),
     m_showLastPrunedRawOffsets(false)
 {
-    m_inputPolyline.addVertex(0, 25, 1);
-    m_inputPolyline.addVertex(0, 0, 0);
-    m_inputPolyline.addVertex(2, 0, 1);
-    m_inputPolyline.addVertex(10, 0, -0.5);
-    m_inputPolyline.addVertex(8, 9, 0.374794619217547);
-    m_inputPolyline.addVertex(21, 0, 0);
-    m_inputPolyline.addVertex(23, 0, 1);
-    m_inputPolyline.addVertex(32, 0, -0.5);
-    m_inputPolyline.addVertex(28, 0, 0.5);
-    m_inputPolyline.addVertex(39, 21, 0);
-    m_inputPolyline.addVertex(28, 12, 0.5);
-    m_inputPolyline.isClosed() = true;
+    input_polyline_.addVertex(0, 25, 1);
+    input_polyline_.addVertex(0, 0, 0);
+    input_polyline_.addVertex(2, 0, 1);
+    input_polyline_.addVertex(10, 0, -0.5);
+    input_polyline_.addVertex(8, 9, 0.374794619217547);
+    input_polyline_.addVertex(21, 0, 0);
+    input_polyline_.addVertex(23, 0, 1);
+    input_polyline_.addVertex(32, 0, -0.5);
+    input_polyline_.addVertex(28, 0, 0.5);
+    input_polyline_.addVertex(39, 21, 0);
+    input_polyline_.addVertex(28, 12, 0.5);
+    input_polyline_.isClosed() = true;
 }
 
 bool PlineOffsetAlgorithmView::interacting() const
@@ -281,7 +283,7 @@ QSGNode *PlineOffsetAlgorithmView::updatePaintNode(QSGNode *oldNode,
     }
 
     rootNode->setMatrix(m_realToUICoord);
-    auto prunedPline = pruneSingularities(m_inputPolyline, utils::realPrecision<double>());
+    auto prunedPline = pruneSingularities(input_polyline_, utils::realPrecision<double>());
     m_origPolylineNode->setVertexesVisible(m_showOrigPlineVertexes);
     m_origPolylineNode->updateGeometry(prunedPline, PolylineNode::NormalPath, m_arcApproxError);
 
@@ -685,14 +687,14 @@ void PlineOffsetAlgorithmView::mousePressEvent(QMouseEvent *event)
     // converting to global coordinates to get screen resolution delta even if current scale != 1
     m_globalMouseDownPoint = QPointF(event->globalX(), event->globalY());
 
-    m_vertexGrabbed = vertexUnderPosition(m_globalMouseDownPoint, m_inputPolyline);
+    m_vertexGrabbed = vertexUnderPosition(m_globalMouseDownPoint, input_polyline_);
     if (!isVertexGrabbed())
     {
         event->ignore();
         return;
     }
 
-    m_origVertexGlobalPos = convertToGlobalUICoord(m_inputPolyline[m_vertexGrabbed].pos());
+    m_origVertexGlobalPos = convertToGlobalUICoord(input_polyline_[m_vertexGrabbed].pos());
 
     setInteracting(true);
     event->accept();
@@ -711,8 +713,8 @@ void PlineOffsetAlgorithmView::mouseMoveEvent(QMouseEvent *event)
     QPointF newLocalVertexPos = mapFromGlobal(newGlobalVertexPos);
     QPointF newRealVertexPos = m_uiToRealCoord * newLocalVertexPos;
 
-    m_inputPolyline[m_vertexGrabbed].x() = newRealVertexPos.x();
-    m_inputPolyline[m_vertexGrabbed].y() = newRealVertexPos.y();
+    input_polyline_[m_vertexGrabbed].x() = newRealVertexPos.x();
+    input_polyline_[m_vertexGrabbed].y() = newRealVertexPos.y();
     update();
 }
 

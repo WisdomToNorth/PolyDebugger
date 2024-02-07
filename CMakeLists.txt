@@ -11,4 +11,5 @@ enable_language(C)
 
 add_subdirectory(clipper2)
 add_subdirectory(cavc)
+add_subdirectory(ngpoly)
 add_subdirectory(PolyDebugger)

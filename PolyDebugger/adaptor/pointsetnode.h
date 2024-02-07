@@ -4,15 +4,20 @@
 #include <QSGOpacityNode>
 
 #include "cavc/polyline.hpp"
+#include "ngpoly/ngpolygonset.h"
 
 class PointSetNode : public QSGOpacityNode
 {
+public:
+    void addPolylineVertexes(cavc::Polyline<double> const &polyline);
+    void addPolygonVertexes(NGPolygonSet const &polygonSet);
+
 public:
     PointSetNode();
     QColor const &color() const;
     void setColor(QColor const &color);
     void addPoint(qreal x, qreal y);
-    void addPolylineVertexes(cavc::Polyline<double> const &polyline);
+
     void clear();
 
 private:

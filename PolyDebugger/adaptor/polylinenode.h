@@ -8,6 +8,7 @@
 
 #include "cavc/polyline.hpp"
 #include "cavc/vector2.hpp"
+#include "ngpoly/ngpolygonset.h"
 
 class FlatColorGeometryNode;
 class PointSetNode;
@@ -21,8 +22,7 @@ public:
         DashedPath
     };
     PolylineNode();
-    void updateGeometry(cavc::Polyline<double> const &pline, PathDrawMode pathDrawMode = NormalPath,
-                        double arcApproxError = 0.005);
+
     QColor const &color() const;
     void setColor(QColor const &color);
 
@@ -34,22 +34,35 @@ public:
 
     bool vertexesVisible() const;
     void setVertexesVisible(bool vertexesVisible);
-
     void setIsVisible(bool isVisible);
 
-private:
-    bool m_pathVisible;
-    bool m_vertexesVisible;
-    FlatColorGeometryNode *m_pathNode;
-    PointSetNode *m_vertexesNode;
-    QColor m_pathColor;
-    QColor m_vertexesColor;
-    bool m_isVisible;
-    std::vector<cavc::Vector2<float>> m_vertexesBuffer;
+public:
+    /* cava */
+    void updateGeometry(cavc::Polyline<double> const &pline, PathDrawMode pathDrawMode = NormalPath,
+                        double arcApproxError = 0.005);
+    /*ngpoly*/
+    void updateGeometry(NGPolygonSet const &polygonSet, PathDrawMode pathDrawMode = NormalPath,
+                        double arcApproxError = 0.005);
 
+private:
+    /* cava */
     void updatePathNode(cavc::Polyline<double> const &pline, double arcApproxError,
                         PathDrawMode drawMode);
     void updateVertexesNode(cavc::Polyline<double> const &pline);
+    /*ngpoly*/
+    void updatePathNode(NGPolygonSet const &polygonSet, double arcApproxError,
+                        PathDrawMode drawMode);
+    void updateVertexesNode(NGPolygonSet const &polygonSet);
+
+private:
+    PointSetNode *m_vertexesNode;
+
+    bool m_pathVisible;
+    bool m_vertexesVisible;
+    FlatColorGeometryNode *m_pathNode;
+    QColor m_pathColor;
+    QColor m_vertexesColor;
+    bool m_isVisible;
 };
 
 #endif // POLYLINENODE_H

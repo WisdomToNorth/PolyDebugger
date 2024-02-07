@@ -1,5 +1,8 @@
-set(CMAKE_AUTOUIC ON)
+
+
+set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
 if(WIN32)
@@ -27,20 +30,20 @@ include_directories(${PROJECT_SOURCE_DIR}/build/include
                     ${PROJECT_SOURCE_DIR}/PolyDebugger)
 
 add_executable(PolyGui
-    offsetisland/plineoffsetislandsalgorithmview.cpp
-    offsetisland/plineoffsetislandsalgorithmview.h
-    offsetisland/PlineOffsetIslandsScene.qml
+    # offsetisland/plineoffsetislandsalgorithmview.cpp
+    # offsetisland/plineoffsetislandsalgorithmview.h
+    # offsetisland/PlineOffsetIslandsScene.qml
 
-    combine/plinecombinealgorithmview.cpp
-    combine/plinecombinealgorithmview.h
-    combine/PlineCombineScene.qml
+    # combine/plinecombinealgorithmview.cpp
+    # combine/plinecombinealgorithmview.h
+    # combine/PlineCombineScene.qml
 
     offset/plineoffsetalgorithmview.cpp
     offset/plineoffsetalgorithmview.h
     offset/PlineOffsetScene.qml
 
-    hilbert/demofuncs.cpp
-    hilbert/demofuncs.h
+    # hilbert/demofuncs.cpp
+    # hilbert/demofuncs.h
 
     adaptor/geometrycanvasitem.cpp
     adaptor/geometrycanvasitem.h

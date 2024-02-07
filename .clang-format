@@ -164,15 +164,9 @@ IncludeCategories:
     SortPriority: 0
     CaseSensitive: true
 
-# third party
-  - Regex: '^<(kdbindings/|magic_enum/|assimp/|ompl/|gtest/|boost/|kdl/|Eigen/).*>'
-    Priority: 5
-    SortPriority: 0
-    CaseSensitive: true
-
 # Generated headfile
-  - Regex: '^<(rfviewshape/|rfio/|rflog/|rfrobot/|rfbase/|rfapp/|rfdb/|generated/).*\.h>'
-    Priority: 6
+  - Regex: '^\"(cavc/|ngpoly/|clipper2/)*.*\.h|\.hpp\"'
+    Priority: 5
     SortPriority: 0
     CaseSensitive: true
 
@@ -185,12 +179,6 @@ IncludeCategories:
 # C++ std includings
   - Regex: '^<.*'
     Priority: 3
-    SortPriority: 0
-    CaseSensitive: false
-
-# stdafx.h
-  - Regex: '^"stdafx\.h"$'
-    Priority: 1
     SortPriority: 0
     CaseSensitive: false
 
