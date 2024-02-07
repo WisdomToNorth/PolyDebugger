@@ -69,3 +69,17 @@ std::size_t GeometryCanvasItem::vertexUnderPosition(QPointF uiGlobalPos,
 
     return vertexGrabbed;
 }
+
+std::size_t GeometryCanvasItem::vertexUnderPosition(QPointF uiGlobalPos,
+                                                    const NGPolygonSet &polygonSet)
+{
+    auto containsVertex = [&](const QPointF &vPosInGlobal)
+    {
+        return utils::fuzzyEqual(vPosInGlobal.x(), uiGlobalPos.x(), 5.0)
+               && utils::fuzzyEqual(vPosInGlobal.y(), uiGlobalPos.y(), 5.0);
+    };
+
+    std::size_t vertexGrabbed = std::numeric_limits<std::size_t>::max();
+    // TODO
+    return vertexGrabbed;
+}

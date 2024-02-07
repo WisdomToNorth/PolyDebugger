@@ -7,7 +7,8 @@
 
 #include "cavc/polyline.hpp"
 #include "cavc/polylineoffset.hpp"
-#include "plinesegmentnode.h"
+
+#include "adaptor/plinesegmentnode.h"
 
 class RawOffsetSegmentsNode : public QSGOpacityNode
 {

@@ -2,7 +2,6 @@
 #define PLINEOFFSETALGORITHMVIEW_H
 
 #include "adaptor/geometrycanvasitem.h"
-
 #include "cavc/polyline.hpp"
 
 class PolylineNode;
@@ -121,15 +120,17 @@ protected:
 private:
     void setInteracting(bool interacting);
 
-    /*Data Structure*/
+    /*2D geo Data Structure*/
     cavc::Polyline<double> input_polyline_;
     PolylineNode *m_origPolylineNode;
     PolylineNode *m_rawOffsetPolylineNode;
     PolylineNode *m_dualRawOffsetPolylineNode;
-    RawOffsetSegmentsNode *m_untrimmedSegmentsParentNode;
     PointSetNode *m_selfIntersectsNode;
 
+    RawOffsetSegmentsNode *m_untrimmedSegmentsParentNode;
     SpatialIndexBoundingBoxesNode *m_boundingBoxesNode;
+
+    /*Qml data*/
     QSGOpacityNode *m_slicesParentNode;
     QSGOpacityNode *m_repeatOffsetsParentNode;
     QSGOpacityNode *m_endPointIntersectCirclesNode;

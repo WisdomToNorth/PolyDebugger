@@ -165,14 +165,14 @@ IncludeCategories:
     CaseSensitive: true
 
 # Generated headfile
-  - Regex: '^\"(cavc/|ngpoly/|clipper2/)*.*\.h|\.hpp\"'
+  - Regex: '^\"(cavc/|ngpoly/|clipper2/).*(\.hpp|\.h)\"'
     Priority: 5
     SortPriority: 0
     CaseSensitive: true
 
 # third party without folder(like occ)
   - Regex: '^<.*(\.hpp|\.hxx)>'
-    Priority: 5
+    Priority: 6
     SortPriority: 0
     CaseSensitive: false
 

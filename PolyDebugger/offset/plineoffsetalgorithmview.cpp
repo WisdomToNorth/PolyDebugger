@@ -4,15 +4,15 @@
 #include <QSGNode>
 #include <QSGTransformNode>
 
+#include "cavc/internal/diagnostics.hpp"
+#include "cavc/polylineoffset.hpp"
+
 #include "adaptor/plinesegmentnode.h"
 #include "adaptor/pointsetnode.h"
 #include "adaptor/polylinenode.h"
-#include "adaptor/rawoffsetsegmentsnode.h"
-#include "adaptor/spatialindexboundingboxesnode.h"
 #include "graphicshelpers.h"
-
-#include "cavc/internal/diagnostics.hpp"
-#include "cavc/polylineoffset.hpp"
+#include "rawoffsetsegmentsnode.h"
+#include "spatialindexboundingboxesnode.h"
 
 using namespace cavc;
 
@@ -283,7 +283,8 @@ QSGNode *PlineOffsetAlgorithmView::updatePaintNode(QSGNode *oldNode,
     }
 
     rootNode->setMatrix(m_realToUICoord);
-    auto prunedPline = pruneSingularities(input_polyline_, utils::realPrecision<double>());
+    const cavc::Polyline<double> &prunedPline =
+        pruneSingularities(input_polyline_, utils::realPrecision<double>());
     m_origPolylineNode->setVertexesVisible(m_showOrigPlineVertexes);
     m_origPolylineNode->updateGeometry(prunedPline, PolylineNode::NormalPath, m_arcApproxError);
 

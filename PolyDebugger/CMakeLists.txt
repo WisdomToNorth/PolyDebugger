@@ -40,7 +40,10 @@ add_executable(PolyGui
 
     offset/plineoffsetalgorithmview.cpp
     offset/plineoffsetalgorithmview.h
+    offset/rawoffsetsegmentsnode.cpp
+    offset/rawoffsetsegmentsnode.h
     offset/PlineOffsetScene.qml
+    offset/spatialindexboundingboxesnode.h
 
     # hilbert/demofuncs.cpp
     # hilbert/demofuncs.h
@@ -53,9 +56,6 @@ add_executable(PolyGui
     adaptor/pointsetnode.h
     adaptor/polylinenode.cpp
     adaptor/polylinenode.h
-    adaptor/rawoffsetsegmentsnode.cpp
-    adaptor/rawoffsetsegmentsnode.h
-    adaptor/spatialindexboundingboxesnode.h
 
     flatcolorgeometrynode.cpp
     flatcolorgeometrynode.h
