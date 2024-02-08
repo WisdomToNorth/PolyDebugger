@@ -3,8 +3,9 @@
 
 #include <vector>
 
-#include "adaptor/geometrycanvasitem.h"
 #include "cavc/polyline.hpp"
+
+#include "adaptor/geometrycanvasitem.h"
 
 class PolylineNode;
 class QSGOpacityNode;
@@ -33,8 +34,10 @@ signals:
     void offsetCountChanged(int offsetCount);
 
 protected:
+    /*Cavc*/
     QSGNode *updatePaintNode(QSGNode *oldNode, UpdatePaintNodeData *) override;
 
+protected:
     void mousePressEvent(QMouseEvent *event) override;
     void mouseMoveEvent(QMouseEvent *event) override;
     void mouseReleaseEvent(QMouseEvent *event) override;
@@ -42,6 +45,10 @@ protected:
 private:
     std::vector<cavc::Polyline<double>> m_ccwLoops;
     std::vector<cavc::Polyline<double>> m_cwLoops;
+    cavc::Polyline<double> *m_polylineGrabbed;
+    void buildCavcData();
+
+private:
     QSGOpacityNode *m_dynamicPlinesParentNode;
     bool m_showVertexes;
     double m_offsetDelta;
@@ -50,7 +57,6 @@ private:
     bool isVertexGrabbed();
     QPointF m_globalMouseDownPoint;
     std::size_t m_vertexGrabbed;
-    cavc::Polyline<double> *m_polylineGrabbed;
     QPointF m_origVertexGlobalPos;
 };
 

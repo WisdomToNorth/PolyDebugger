@@ -3,10 +3,10 @@
 #include <QQmlContext>
 #include <QSurfaceFormat>
 
-#include "offset/plineoffsetalgorithmview.h"
+// #include "offset/plineoffsetalgorithmview.h"
 // #include "combine/plinecombinealgorithmview.h"
 // #include "hilbert/demofuncs.h"
-// #include "offsetisland/plineoffsetislandsalgorithmview.h"
+#include "offsetisland/plineoffsetislandsalgorithmview.h"
 
 int main(int argc, char *argv[])
 {
@@ -21,10 +21,10 @@ int main(int argc, char *argv[])
     //                                         return demoFuncs;
     //                                     });
     // qmlRegisterType<PlineCombineAlgorithmView>("Polyline", 1, 0, "PlineCombineAlgorithmView");
-    // qmlRegisterType<PlineOffsetIslandsAlgorithmView>("Polyline", 1, 0,
-    //                                                  "PlineOffsetIslandsAlgorithmView");
+    qmlRegisterType<PlineOffsetIslandsAlgorithmView>("Polyline", 1, 0,
+                                                     "PlineOffsetIslandsAlgorithmView");
 
-    qmlRegisterType<PlineOffsetAlgorithmView>("Polyline", 1, 0, "PlineOffsetAlgorithmView");
+    // qmlRegisterType<PlineOffsetAlgorithmView>("Polyline", 1, 0, "PlineOffsetAlgorithmView");
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 

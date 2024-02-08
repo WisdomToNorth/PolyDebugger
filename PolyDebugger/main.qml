@@ -1,16 +1,14 @@
+// import "offset"
+
 import QtQuick 2.13
 import QtQuick.Controls 2.13
 import QtQuick.Layouts 1.13
 import QtQuick.Window 2.13
 // import "combine"
 // import "hilbert"
-// import "offsetisland"
-import "offset"
+import "offsetisland"
 
 ApplicationWindow {
-    // TabButton {
-    //     text: "Polyline Offset Islands"
-    // }
     // TabButton {
     //     text: "Polyline Combine"
     // }
@@ -38,8 +36,6 @@ ApplicationWindow {
             StackLayout {
                 // PlineCombineScene {
                 // }
-                // PlineOffsetIslandsScene {
-                // }
                 // HilbertCurveScene {
                 // }
 
@@ -47,7 +43,9 @@ ApplicationWindow {
                 anchors.margins: 2
                 currentIndex: tabBar.currentIndex
 
-                PlineOffsetScene {
+                // PlineOffsetScene {
+                // }
+                PlineOffsetIslandsScene {
                 }
 
             }
@@ -62,8 +60,11 @@ ApplicationWindow {
         // TabButton {
         //     text: "Hilbert Curve"
         // }
+        // TabButton {
+        //     text: "Polyline Offset"
+        // }
         TabButton {
-            text: "Polyline Offset"
+            text: "Polyline Offset Islands"
         }
 
     }

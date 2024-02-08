@@ -30,20 +30,20 @@ include_directories(${PROJECT_SOURCE_DIR}/build/include
                     ${PROJECT_SOURCE_DIR}/PolyDebugger)
 
 add_executable(PolyGui
-    # offsetisland/plineoffsetislandsalgorithmview.cpp
-    # offsetisland/plineoffsetislandsalgorithmview.h
-    # offsetisland/PlineOffsetIslandsScene.qml
+    offsetisland/plineoffsetislandsalgorithmview.cpp
+    offsetisland/plineoffsetislandsalgorithmview.h
+    offsetisland/PlineOffsetIslandsScene.qml
 
     # combine/plinecombinealgorithmview.cpp
     # combine/plinecombinealgorithmview.h
     # combine/PlineCombineScene.qml
 
-    offset/plineoffsetalgorithmview.cpp
-    offset/plineoffsetalgorithmview.h
-    offset/rawoffsetsegmentsnode.cpp
-    offset/rawoffsetsegmentsnode.h
-    offset/PlineOffsetScene.qml
-    offset/spatialindexboundingboxesnode.h
+    # offset/plineoffsetalgorithmview.cpp
+    # offset/plineoffsetalgorithmview.h
+    # offset/rawoffsetsegmentsnode.cpp
+    # offset/rawoffsetsegmentsnode.h
+    # offset/PlineOffsetScene.qml
+    # offset/spatialindexboundingboxesnode.h
 
     # hilbert/demofuncs.cpp
     # hilbert/demofuncs.h
@@ -64,6 +64,7 @@ add_executable(PolyGui
     main.cpp
     simplecirclenode.cpp
     simplecirclenode.h
+    machinedefine.h
 
     GeometrySceneView.qml
     main.qml

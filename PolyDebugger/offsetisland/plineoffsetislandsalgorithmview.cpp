@@ -2,8 +2,10 @@
 
 #include <QSGTransformNode>
 
-#include "adaptor/polylinenode.h"
 #include "cavc/polylineoffsetislands.hpp"
+
+#include "adaptor/polylinenode.h"
+#include "machinedefine.h"
 
 using namespace cavc;
 
@@ -11,116 +13,14 @@ PlineOffsetIslandsAlgorithmView::PlineOffsetIslandsAlgorithmView(QQuickItem *par
     GeometryCanvasItem(parent), m_showVertexes(true), m_offsetDelta(1), m_offsetCount(20),
     m_vertexGrabbed(std::numeric_limits<std::size_t>::max()), m_polylineGrabbed(nullptr)
 {
-    //  m_outerPline.addVertex(0, 1, 1);
-    //  m_outerPline.addVertex(10, 1, 1);
-    //  m_outerPline.isClosed() = true;
-
-    auto radius = 40;
-    auto centerX = 0;
-    auto centerY = 0;
-    std::size_t segmentCount = 16;
-    cavc::Polyline<double> mainOuterPline;
-    for (std::size_t i = 0; i < segmentCount; ++i)
+    switch (g_machineType)
     {
-        double angle = static_cast<double>(i) * utils::tau<double>() / segmentCount;
-        mainOuterPline.addVertex(radius * std::cos(angle) + centerX,
-                                 radius * std::sin(angle) + centerY, i % 2 == 0 ? 1 : -1);
+    case MachineType::kCavc: buildCavcData(); break;
+    case MachineType::kNGPoly: break;
+    case MachineType::kClipper: break;
+
+    default: break;
     }
-    mainOuterPline.isClosed() = true;
-    m_ccwLoops.push_back(std::move(mainOuterPline));
-
-    //  int currIslandCount = 0;
-    //  auto addIslandCenteredAt = [&] (double x, double y) {
-    //    cavc::Polyline<double> island;
-    //    island.isClosed() = true;
-    //        if (currIslandCount % 2 == 0) {
-    //          double halfLength = 1.5;
-    //          double halfWidth = 6;
-    //          island.addVertex(x - halfWidth, y - halfLength, 0.0);
-    //          island.addVertex(x - halfWidth, y + halfLength, 0.0);
-    //          island.addVertex(x + halfWidth, y + halfLength, 0.0);
-    //          island.addVertex(x + halfWidth, y - halfLength, 0.0);
-    //        } else {
-    //          double islandRadius = 1.5;
-    //          island.addVertex(x - islandRadius, y, -1);
-    //          island.addVertex(x + islandRadius, y, -1);
-    //        }
-    //    currIslandCount += 1;
-    //    m_islands.push_back(std::move(island));
-    //  };
-
-    //  std::size_t totalIslandCount = 25;
-    //  for (std::size_t i = 0; i < totalIslandCount; ++i) {
-    //    double angle = 2 * static_cast<double>(i) * utils::tau<double>() / totalIslandCount;
-    //    double spiralMag = 0.75 * static_cast<double>(i + 1) / totalIslandCount;
-    //   addIslandCenteredAt(spiralMag * radius * std::cos(angle) + centerX, spiralMag * radius *
-    //   std::sin(angle) + centerY);
-    //  }
-
-    //  for (std::size_t i = 0; i < totalIslandCount; ++i) {
-    //    double angle = static_cast<double>(i) * utils::tau<double>() / totalIslandCount;
-    //    double spiralMag = 0.65;
-    //   addIslandCenteredAt(spiralMag * radius * std::cos(angle) + centerX, spiralMag * radius *
-    //   std::sin(angle) + centerY);
-    //  }
-
-    //  for (std::size_t i = 0; i < totalIslandCount; ++i) {
-    //    double angle = static_cast<double>(i) * utils::tau<double>() / totalIslandCount;
-    //    double spiralMag = 0.35;
-    //   addIslandCenteredAt(spiralMag * radius * std::cos(angle) + centerX, spiralMag * radius *
-    //   std::sin(angle) + centerY);
-    //  }
-
-    //  addIslandCenteredAt(0, 0);
-
-    cavc::Polyline<double> island1;
-    island1.addVertex(-7, -25, 0);
-    island1.addVertex(-4, -25, 0);
-    island1.addVertex(-4, -15, 0);
-    island1.addVertex(-7, -15, 0);
-    island1.isClosed() = true;
-    invertDirection(island1);
-    m_cwLoops.push_back(std::move(island1));
-
-    //  cavc::Polyline<double> island2;
-    //  island2.addVertex(-3, -10, 0);
-    //  island2.addVertex(0, -10, 0);
-    //  island2.addVertex(0, 10, 0);
-    //  island2.addVertex(-3, 10, 0);
-    //  island2.isClosed() = true;
-    //  invertDirection(island2);
-    //  m_islands.push_back(std::move(island2));
-
-    //  cavc::Polyline<double> island3;
-    //  island3.addVertex(-9, -10, 0);
-    //  island3.addVertex(-6, -10, 0);
-    //  island3.addVertex(-6, 10, 0);
-    //  island3.addVertex(-9, 10, 0);
-    //  island3.isClosed() = true;
-    //  invertDirection(island3);
-    //  m_islands.push_back(std::move(island3));
-
-    cavc::Polyline<double> island2;
-    island2.addVertex(22, -20, 1);
-    island2.addVertex(27, -20, 1);
-    island2.isClosed() = true;
-    invertDirection(island2);
-    m_cwLoops.push_back(std::move(island2));
-
-    cavc::Polyline<double> island3;
-    island3.addVertex(0, 25, 1);
-    island3.addVertex(-4, 0, 0);
-    island3.addVertex(2, 0, 1);
-    island3.addVertex(10, 0, -0.5);
-    island3.addVertex(8, 9, 0.374794619217547);
-    island3.addVertex(21, 0, 0);
-    island3.addVertex(23, 0, 1);
-    island3.addVertex(32, 0, -0.5);
-    island3.addVertex(28, 0, 0.5);
-    island3.addVertex(28, 12, 0.5);
-    island3.isClosed() = true;
-    invertDirection(island3);
-    m_cwLoops.push_back(std::move(island3));
 }
 
 bool PlineOffsetIslandsAlgorithmView::showVertexes() const
@@ -186,6 +86,7 @@ QSGNode *PlineOffsetIslandsAlgorithmView::updatePaintNode(QSGNode *oldNode,
     rootNode->setMatrix(m_realToUICoord);
 
     PolylineNode *plineNode = static_cast<PolylineNode *>(m_dynamicPlinesParentNode->firstChild());
+
     auto addPline = [&](cavc::Polyline<double> const &pline,
                         PolylineNode::PathDrawMode drawMode = PolylineNode::NormalPath,
                         QColor color = QColor("blue"), bool vertexesVisible = false,
@@ -330,4 +231,52 @@ void PlineOffsetIslandsAlgorithmView::mouseReleaseEvent(QMouseEvent *event)
 bool PlineOffsetIslandsAlgorithmView::isVertexGrabbed()
 {
     return m_vertexGrabbed != std::numeric_limits<std::size_t>::max();
+}
+
+void PlineOffsetIslandsAlgorithmView::buildCavcData()
+{
+    auto radius = 40;
+    auto centerX = 0;
+    auto centerY = 0;
+    std::size_t segmentCount = 16;
+    cavc::Polyline<double> mainOuterPline;
+    for (std::size_t i = 0; i < segmentCount; ++i)
+    {
+        double angle = static_cast<double>(i) * utils::tau<double>() / segmentCount;
+        mainOuterPline.addVertex(radius * std::cos(angle) + centerX,
+                                 radius * std::sin(angle) + centerY, i % 2 == 0 ? 1 : -1);
+    }
+    mainOuterPline.isClosed() = true;
+    m_ccwLoops.push_back(std::move(mainOuterPline));
+
+    cavc::Polyline<double> island1;
+    island1.addVertex(-7, -25, 0);
+    island1.addVertex(-4, -25, 0);
+    island1.addVertex(-4, -15, 0);
+    island1.addVertex(-7, -15, 0);
+    island1.isClosed() = true;
+    invertDirection(island1);
+    m_cwLoops.push_back(std::move(island1));
+
+    cavc::Polyline<double> island2;
+    island2.addVertex(22, -20, 1);
+    island2.addVertex(27, -20, 1);
+    island2.isClosed() = true;
+    invertDirection(island2);
+    m_cwLoops.push_back(std::move(island2));
+
+    cavc::Polyline<double> island3;
+    island3.addVertex(0, 25, 1);
+    island3.addVertex(-4, 0, 0);
+    island3.addVertex(2, 0, 1);
+    island3.addVertex(10, 0, -0.5);
+    island3.addVertex(8, 9, 0.374794619217547);
+    island3.addVertex(21, 0, 0);
+    island3.addVertex(23, 0, 1);
+    island3.addVertex(32, 0, -0.5);
+    island3.addVertex(28, 0, 0.5);
+    island3.addVertex(28, 12, 0.5);
+    island3.isClosed() = true;
+    invertDirection(island3);
+    m_cwLoops.push_back(std::move(island3));
 }
