@@ -5,8 +5,12 @@ import QtQuick.Controls 2.13
 import QtQuick.Layouts 1.13
 
 SplitView {
+    id: splitView
+    anchors.fill: parent
+    orientation: Qt.Horizontal
+
     GeometrySceneView {
-        SplitView.fillWidth: true
+        implicitWidth: splitView.width * 0.8
 
         PlineCombineAlgorithmView {
             id: algorithmView
@@ -14,14 +18,13 @@ SplitView {
             anchors.fill: parent
             plineCombineMode: combineModeComboBox.currentIndex
         }
-
     }
 
     ColumnLayout {
         anchors.topMargin: 5
         anchors.top: parent.top
         anchors.bottom: parent.bottom
-        SplitView.preferredWidth: 300
+        implicitWidth: splitView.width * 0.2
 
         CheckBox {
             text: "Show Vertexes"
@@ -59,9 +62,7 @@ SplitView {
                         algorithmView.flipArgOrder = checked;
                     }
                 }
-
             }
-
         }
 
         GroupBox {
@@ -83,15 +84,11 @@ SplitView {
                     leftPadding: 6
                     text: "Winding Number: " + algorithmView.windingNumber
                 }
-
             }
-
         }
 
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }

@@ -34,9 +34,9 @@ add_executable(PolyGui
     offsetisland/plineoffsetislandsalgorithmview.h
     offsetisland/PlineOffsetIslandsScene.qml
 
-    # combine/plinecombinealgorithmview.cpp
-    # combine/plinecombinealgorithmview.h
-    # combine/PlineCombineScene.qml
+    combine/plinecombinealgorithmview.cpp
+    combine/plinecombinealgorithmview.h
+    combine/PlineCombineScene.qml
 
     # offset/plineoffsetalgorithmview.cpp
     # offset/plineoffsetalgorithmview.h

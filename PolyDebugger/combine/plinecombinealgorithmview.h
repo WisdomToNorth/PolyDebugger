@@ -1,8 +1,9 @@
 #ifndef PLINECOMBINEALGORITHMVIEW_H
 #define PLINECOMBINEALGORITHMVIEW_H
 
-#include "adaptor/geometrycanvasitem.h"
 #include "cavc/polyline.hpp"
+
+#include "adaptor/geometrycanvasitem.h"
 
 class PolylineNode;
 class PointSetNode;
@@ -33,6 +34,7 @@ public:
         CoincidentSlices
     };
     Q_ENUM(PlineCombineMode)
+
     PlineCombineAlgorithmView(QQuickItem *parent = nullptr);
 
     int windingNumber() const;
@@ -71,22 +73,25 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
-    void setWindingNumber(int windingNumber);
-    void setInteracting(bool interacting);
     cavc::Polyline<double> m_plineA;
-    PolylineNode *m_polylineANode;
     cavc::Polyline<double> m_plineB;
-    PolylineNode *m_polylineBNode;
     cavc::Polyline<double> m_testPoint;
+    cavc::Polyline<double> *m_polylineGrabbed;
+
+private:
+    PolylineNode *m_polylineANode;
+    PolylineNode *m_polylineBNode;
     PolylineNode *m_testPointNode;
     PointSetNode *m_intersectsNode;
+
+    void setWindingNumber(int windingNumber);
+    void setInteracting(bool interacting);
     QSGOpacityNode *m_dynamicPlinesParentNode;
     int m_windingNumber;
 
     bool isVertexGrabbed();
     QPointF m_globalMouseDownPoint;
     std::size_t m_vertexGrabbed;
-    cavc::Polyline<double> *m_polylineGrabbed;
     QPointF m_origVertexGlobalPos;
     bool m_interacting;
     bool m_showIntersects;

@@ -633,7 +633,7 @@ void AddPaths_(const Paths64 &paths, PathType polytype, bool is_open,
 {
     const auto total_vertex_count = std::accumulate(
         paths.begin(), paths.end(), 0,
-        [](const auto &a, const Path64 &path) {  return a + static_cast<unsigned>(path.size()); });
+        [](const auto &a, const Path64 &path) { return a + static_cast<unsigned>(path.size()); });
     if (total_vertex_count == 0)
         return;
 

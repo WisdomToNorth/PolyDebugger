@@ -4,7 +4,7 @@
 #include <QSurfaceFormat>
 
 // #include "offset/plineoffsetalgorithmview.h"
-// #include "combine/plinecombinealgorithmview.h"
+#include "combine/plinecombinealgorithmview.h"
 // #include "hilbert/demofuncs.h"
 #include "offsetisland/plineoffsetislandsalgorithmview.h"
 
@@ -20,7 +20,8 @@ int main(int argc, char *argv[])
     //                                         DemoFuncs *demoFuncs = new DemoFuncs();
     //                                         return demoFuncs;
     //                                     });
-    // qmlRegisterType<PlineCombineAlgorithmView>("Polyline", 1, 0, "PlineCombineAlgorithmView");
+    qmlRegisterType<PlineCombineAlgorithmView>("Polyline", 1, 0, "PlineCombineAlgorithmView");
+
     qmlRegisterType<PlineOffsetIslandsAlgorithmView>("Polyline", 1, 0,
                                                      "PlineOffsetIslandsAlgorithmView");
 
