@@ -6,6 +6,7 @@ import QtQuick.Layouts 1.13
 
 SplitView {
     id: splitView
+
     anchors.fill: parent
     orientation: Qt.Horizontal
 
@@ -18,6 +19,7 @@ SplitView {
             anchors.fill: parent
             plineCombineMode: combineModeComboBox.currentIndex
         }
+
     }
 
     ColumnLayout {
@@ -27,6 +29,7 @@ SplitView {
         implicitWidth: splitView.width * 0.2
 
         CheckBox {
+            width: parent.width
             text: "Show Vertexes"
             checked: algorithmView.showVertexes
             onCheckedChanged: {
@@ -35,6 +38,7 @@ SplitView {
         }
 
         CheckBox {
+            width: parent.width
             text: "Show Intersects"
             checked: algorithmView.showIntersects
             onCheckedChanged: {
@@ -45,14 +49,19 @@ SplitView {
         GroupBox {
             title: "Combine Mode"
             leftInset: 5
+            rightInset: 5
+            implicitWidth: parent.width
 
             ColumnLayout {
+                implicitWidth: parent.width
+
                 ComboBox {
                     id: combineModeComboBox
 
+                    implicitWidth: parent.width
                     leftInset: 5
+                    rightInset: 5
                     model: ["None", "Union", "Exclude", "Intersect", "XOR", "Coincident Slices"]
-                    implicitWidth: 200
                 }
 
                 CheckBox {
@@ -62,14 +71,20 @@ SplitView {
                         algorithmView.flipArgOrder = checked;
                     }
                 }
+
             }
+
         }
 
         GroupBox {
             title: "Winding Number"
             leftInset: 5
+            rightInset: 5
+            implicitWidth: parent.width
 
             ColumnLayout {
+                implicitWidth: parent.width
+
                 CheckBox {
                     text: "Show Test Point"
                     checked: algorithmView.showWindingNumberPoint
@@ -84,11 +99,15 @@ SplitView {
                     leftPadding: 6
                     text: "Winding Number: " + algorithmView.windingNumber
                 }
+
             }
+
         }
 
         Item {
             Layout.fillHeight: true
         }
+
     }
+
 }

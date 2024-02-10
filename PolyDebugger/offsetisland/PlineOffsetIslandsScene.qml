@@ -6,6 +6,7 @@ import QtQuick.Layouts 1.13
 
 SplitView {
     id: splitView
+
     anchors.fill: parent
     orientation: Qt.Horizontal
 
@@ -14,21 +15,24 @@ SplitView {
 
         PlineOffsetIslandsAlgorithmView {
             id: algorithmView
+
             anchors.fill: parent
         }
+
     }
 
     GroupBox {
         id: controlPanel
-        implicitWidth: splitView.width * 0.2 // 20% of the SplitView's width
 
+        implicitWidth: splitView.width * 0.2 // 20% of the SplitView's width
         anchors.top: parent.top
         anchors.bottom: parent.bottom
 
         Label {
             id: offsetDeltaLabel
+
             anchors.top: parent.top
-            anchors.topMargin: 30
+            anchors.topMargin: 15
             topPadding: 5
             color: "black"
             text: "Offset Delta"
@@ -36,6 +40,7 @@ SplitView {
 
         Item {
             id: offsetItem
+
             anchors.top: offsetDeltaLabel.bottom
             width: parent.width
             implicitWidth: offsetSlider.implicitWidth
@@ -43,16 +48,16 @@ SplitView {
 
             TextField {
                 id: offsetTextField
-                width: parent.width
-                selectByMouse: true  // 鼠标可以选中文本
 
+                width: parent.width
+                selectByMouse: true // 鼠标可以选中文本
                 anchors.top: offsetItem.top
                 text: parseFloat(offsetSlider.value).toFixed(2)
-
                 onTextChanged: {
                     let f = parseFloat(text);
                     if (isNaN(f))
-                        return;
+                        return ;
+
                     offsetSlider.value = f;
                 }
 
@@ -60,10 +65,12 @@ SplitView {
                     bottom: offsetSlider.from
                     top: offsetSlider.to
                 }
+
             }
 
             Slider {
                 id: offsetSlider
+
                 width: parent.width
                 anchors.top: offsetTextField.bottom
                 from: -15
@@ -89,10 +96,12 @@ SplitView {
                 anchors.top: offsetSlider.bottom
                 text: offsetSlider.to
             }
+
         }
 
         Label {
             id: offsetCountLabel
+
             anchors.top: offsetItem.bottom
             anchors.topMargin: 30
             topPadding: 5
@@ -102,14 +111,16 @@ SplitView {
 
         TextField {
             id: offsetCountField
+
             anchors.top: offsetCountLabel.bottom
             width: parent.width
             text: algorithmView.offsetCount
-            selectByMouse: true  // 鼠标可以选中文本
+            selectByMouse: true // 鼠标可以选中文本
             onTextChanged: {
                 let c = parseInt(text);
                 if (isNaN(c))
-                    return;
+                    return ;
+
                 algorithmView.offsetCount = c;
             }
 
@@ -117,6 +128,7 @@ SplitView {
                 bottom: 0
                 top: 1000
             }
+
         }
 
         CheckBox {
@@ -128,5 +140,7 @@ SplitView {
                 algorithmView.showVertexes = checked;
             }
         }
+
     }
+
 }

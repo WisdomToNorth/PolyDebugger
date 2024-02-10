@@ -7,7 +7,6 @@ set(CMAKE_AUTORCC ON)
 
 if(WIN32)
   message(STATUS "Qt windows")
-  include(D:/OpenSource/Qt/5.15.2/msvc2019_64/lib/cmake/Qt5/Qt5Config.cmake)
   find_package(Qt5 REQUIRED COMPONENTS Core Quick Gui)
   set(Qt_LIBRARIES Qt5::Core Qt5::Quick Qt5::Gui)
   set(Qt_LIBRARY_DIR ${Qt5_LIBRARY_DIR})

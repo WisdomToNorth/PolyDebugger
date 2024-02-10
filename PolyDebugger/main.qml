@@ -2,7 +2,6 @@ import QtQuick 2.13
 import QtQuick.Controls 2.13
 import QtQuick.Layouts 1.13
 import QtQuick.Window 2.13
-
 // import "hilbert"
 // import "offset"
 import "combine"
@@ -11,14 +10,19 @@ import "offsetisland"
 ApplicationWindow {
     id: mainWindow
 
+    function adjustFontSize(baseSize) {
+        return baseSize * Screen.pixelDensity;
+    }
+
     visible: true
     width: Screen.width - 200
     height: Screen.height - 200
     title: qsTr("Cavalier Contours")
 
     font {
+        // pointSize: 20
+        // pixelSize: adjustFontSize(20)
         family: "Consolas"
-        pointSize: 20
     }
 
     Page {
@@ -30,7 +34,6 @@ ApplicationWindow {
             border.color: "grey"
 
             StackLayout {
-
                 // HilbertCurveScene {
                 // }
 
@@ -45,8 +48,11 @@ ApplicationWindow {
 
                 PlineCombineScene {
                 }
+
             }
+
         }
+
     }
 
     header: TabBar {
@@ -61,8 +67,11 @@ ApplicationWindow {
         TabButton {
             text: "Polyline Offset Islands"
         }
+
         TabButton {
             text: "Polyline Combine"
         }
+
     }
+
 }
