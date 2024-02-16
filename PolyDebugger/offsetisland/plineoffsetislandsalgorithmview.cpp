@@ -5,7 +5,7 @@
 #include "cavc/polylineoffsetislands.hpp"
 
 #include "adaptor/polylinenode.h"
-#include "machinedefine.h"
+#include "settings/settings.h"
 
 using namespace cavc;
 
@@ -13,11 +13,13 @@ PlineOffsetIslandsAlgorithmView::PlineOffsetIslandsAlgorithmView(QQuickItem *par
     GeometryCanvasItem(parent), m_showVertexes(true), m_offsetDelta(1), m_offsetCount(20),
     m_vertexGrabbed(std::numeric_limits<std::size_t>::max()), m_polylineGrabbed(nullptr)
 {
-    switch (g_machineType)
+    auto machine_type = NgSettings::instance().appAlgorithmCore();
+    std::cout << "type in offset class: " << static_cast<int>(machine_type) << std::endl;
+    switch (machine_type)
     {
-    case MachineType::kCavc: buildCavcData(); break;
-    case MachineType::kNGPoly: break;
-    case MachineType::kClipper: break;
+    case NgSettings::AppAlgorithmCore::kCavc: buildCavcData(); break;
+    case NgSettings::AppAlgorithmCore::kNGPoly: break;
+    case NgSettings::AppAlgorithmCore::kClipper: break;
 
     default: break;
     }
@@ -46,7 +48,9 @@ double PlineOffsetIslandsAlgorithmView::offsetDelta() const
 void PlineOffsetIslandsAlgorithmView::setOffsetDelta(double offsetDelta)
 {
     if (qFuzzyCompare(m_offsetDelta, offsetDelta))
+    {
         return;
+    }
 
     m_offsetDelta = offsetDelta;
     update();

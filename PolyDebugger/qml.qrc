@@ -6,5 +6,6 @@
         <file>combine/PlineCombineScene.qml</file>
         <file>hilbert/HilbertCurveScene.qml</file>
         <file>offsetisland/PlineOffsetIslandsScene.qml</file>
+        <file>settings/DebuggerSettings.qml</file>
     </qresource>
 </RCC>

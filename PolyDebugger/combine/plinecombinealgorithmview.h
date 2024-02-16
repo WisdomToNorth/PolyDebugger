@@ -23,6 +23,7 @@ class PlineCombineAlgorithmView : public GeometryCanvasItem
     Q_PROPERTY(bool flipArgOrder READ flipArgOrder WRITE setFlipArgOrder NOTIFY flipArgOrderChanged)
     Q_PROPERTY(bool showWindingNumberPoint READ showWindingNumberPoint WRITE
                    setShowWindingNumberPoint NOTIFY showWindingNumberPointChanged)
+
 public:
     enum PlineCombineMode
     {

@@ -48,7 +48,7 @@ void PointSetNode::addPolylineVertexes(const cavc::Polyline<double> &polyline)
 {
     for (auto const &v : polyline.vertexes())
     {
-        std::cout << "x: " << v.x() << " y: " << v.y() << std::endl;
+        // std::cout << "x: " << v.x() << " y: " << v.y() << std::endl;
         addPoint(v.x(), v.y());
     }
 }

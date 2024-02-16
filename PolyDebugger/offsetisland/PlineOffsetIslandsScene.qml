@@ -7,7 +7,6 @@ import QtQuick.Layouts 1.13
 SplitView {
     id: splitView
 
-    anchors.fill: parent
     orientation: Qt.Horizontal
 
     GeometrySceneView {

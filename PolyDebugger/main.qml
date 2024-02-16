@@ -1,11 +1,13 @@
+// import "hilbert"
+// import "offset"
+
 import QtQuick 2.13
 import QtQuick.Controls 2.13
 import QtQuick.Layouts 1.13
 import QtQuick.Window 2.13
-// import "hilbert"
-// import "offset"
 import "combine"
 import "offsetisland"
+import "settings"
 
 ApplicationWindow {
     id: mainWindow
@@ -36,13 +38,16 @@ ApplicationWindow {
             StackLayout {
                 // HilbertCurveScene {
                 // }
+                // PlineOffsetScene {
+                // }
 
                 anchors.fill: parent
                 anchors.margins: 2
                 currentIndex: tabBar.currentIndex
 
-                // PlineOffsetScene {
-                // }
+                DebuggerSettings {
+                }
+
                 PlineOffsetIslandsScene {
                 }
 
@@ -70,6 +75,10 @@ ApplicationWindow {
 
         TabButton {
             text: "Polyline Combine"
+        }
+
+        TabButton {
+            text: "Debugger Settings"
         }
 
     }

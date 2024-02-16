@@ -37,6 +37,9 @@ add_executable(PolyGui
     combine/plinecombinealgorithmview.h
     combine/PlineCombineScene.qml
 
+    settings/settings.h
+    settings/DebuggerSettings.qml
+
     # offset/plineoffsetalgorithmview.cpp
     # offset/plineoffsetalgorithmview.h
     # offset/rawoffsetsegmentsnode.cpp
@@ -63,7 +66,6 @@ add_executable(PolyGui
     main.cpp
     simplecirclenode.cpp
     simplecirclenode.h
-    machinedefine.h
 
     GeometrySceneView.qml
     main.qml

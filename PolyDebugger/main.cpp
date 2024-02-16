@@ -7,6 +7,7 @@
 #include "combine/plinecombinealgorithmview.h"
 // #include "hilbert/demofuncs.h"
 #include "offsetisland/plineoffsetislandsalgorithmview.h"
+#include "settings/settings.h"
 
 int main(int argc, char *argv[])
 {
@@ -20,6 +21,8 @@ int main(int argc, char *argv[])
     //                                         DemoFuncs *demoFuncs = new DemoFuncs();
     //                                         return demoFuncs;
     //                                     });
+    qmlRegisterType<NgSettings>("NgSettings", 1, 0, "NgSettings");
+
     qmlRegisterType<PlineCombineAlgorithmView>("Polyline", 1, 0, "PlineCombineAlgorithmView");
 
     qmlRegisterType<PlineOffsetIslandsAlgorithmView>("Polyline", 1, 0,
