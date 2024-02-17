@@ -3,7 +3,8 @@
 
 #include <QSGFlatColorMaterial>
 #include <QSGGeometryNode>
-
+namespace debugger
+{
 class FlatColorGeometryNode : public QSGGeometryNode
 {
 public:
@@ -16,8 +17,8 @@ public:
 
 protected:
     bool m_isVisible;
-    QSGGeometry m_geometry;
+    QSGGeometry qsg_geometry_;
     QSGFlatColorMaterial m_material;
 };
-
+} // namespace debugger
 #endif // FLATCOLORGEOMETRYNODE_H

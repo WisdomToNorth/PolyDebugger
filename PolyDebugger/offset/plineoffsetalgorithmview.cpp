@@ -14,6 +14,8 @@
 #include "rawoffsetsegmentsnode.h"
 #include "spatialindexboundingboxesnode.h"
 
+namespace debugger
+{
 using namespace cavc;
 
 PlineOffsetAlgorithmView::PlineOffsetAlgorithmView(QQuickItem *parent) :
@@ -734,3 +736,4 @@ bool PlineOffsetAlgorithmView::isVertexGrabbed()
 {
     return m_vertexGrabbed != std::numeric_limits<std::size_t>::max();
 }
+} // namespace debugger

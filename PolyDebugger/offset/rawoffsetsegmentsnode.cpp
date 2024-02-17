@@ -1,5 +1,6 @@
 #include "rawoffsetsegmentsnode.h"
-
+namespace debugger
+{
 void RawOffsetSegmentsNode::updateGeometry(
     const std::vector<cavc::internal::PlineOffsetSegment<double>> &rawOffsetSegments,
     double arcApproxError)
@@ -38,3 +39,4 @@ void RawOffsetSegmentsNode::updateGeometry(
         segNode = static_cast<PlineSegmentNode *>(segNode->nextSibling());
     }
 }
+} // namespace debugger

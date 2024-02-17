@@ -5,11 +5,12 @@
 
 #include "adaptor/geometrycanvasitem.h"
 
-class PolylineNode;
-class PointSetNode;
 class QSGGeometryNode;
 class QSGOpacityNode;
-
+namespace debugger
+{
+class PolylineNode;
+class PointSetNode;
 class PlineCombineAlgorithmView : public GeometryCanvasItem
 {
     Q_OBJECT
@@ -101,5 +102,5 @@ private:
     bool m_flipArgOrder;
     bool m_showWindingNumberPoint;
 };
-
+} // namespace debugger
 #endif // PLINECOMBINEALGORITHMVIEW_H

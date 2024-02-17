@@ -3,6 +3,8 @@
 #include <QSGFlatColorMaterial>
 #include <QSGGeometryNode>
 
+namespace debugger
+{
 QSGGeometryNode *gh::createSimpleGeomNode(int vertexCount, const QColor &color, float width,
                                           QSGGeometry::DrawingMode mode)
 {
@@ -42,3 +44,4 @@ QColor gh::indexToColor(std::size_t index)
 
     return QColor("black");
 }
+} // namespace debugger

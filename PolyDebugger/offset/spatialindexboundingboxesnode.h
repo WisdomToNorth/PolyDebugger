@@ -4,9 +4,12 @@
 #include <QSGOpacityNode>
 
 #include "cavc/staticspatialindex.hpp"
+
 #include "flatcolorgeometrynode.h"
 #include "graphicshelpers.h"
 
+namespace debugger
+{
 class SpatialIndexBoundingBoxesNode : public QSGOpacityNode
 {
 public:
@@ -52,5 +55,5 @@ public:
         }
     }
 };
-
+} // namespace debugger
 #endif // SPATIALINDEXBOUNDINGBOXESNODE_H

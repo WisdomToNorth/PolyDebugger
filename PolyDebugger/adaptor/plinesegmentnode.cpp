@@ -1,26 +1,27 @@
 #include "plinesegmentnode.h"
 
 #include "graphicshelpers.h"
-
+namespace debugger
+{
 void PlineSegmentNode::updateGeometry(const cavc::PlineVertex<double> &v1,
                                       const cavc::PlineVertex<double> &v2, double arcApproxError)
 {
     if (v1.bulgeIsZero() || fuzzyEqual(v1.pos(), v2.pos()))
     {
-        m_geometry.allocate(2);
-        m_geometry.vertexDataAsPoint2D()[0].set(static_cast<float>(v1.x()),
-                                                static_cast<float>(v1.y()));
-        m_geometry.vertexDataAsPoint2D()[1].set(static_cast<float>(v2.x()),
-                                                static_cast<float>(v2.y()));
+        qsg_geometry_.allocate(2);
+        qsg_geometry_.vertexDataAsPoint2D()[0].set(static_cast<float>(v1.x()),
+                                                   static_cast<float>(v1.y()));
+        qsg_geometry_.vertexDataAsPoint2D()[1].set(static_cast<float>(v2.x()),
+                                                   static_cast<float>(v2.y()));
     }
     else
     {
         auto arc = arcRadiusAndCenter(v1, v2);
         if (arc.radius < arcApproxError + cavc::utils::realThreshold<double>())
         {
-            m_geometry.allocate(static_cast<int>(1));
-            m_geometry.vertexDataAsPoint2D()[0].set(static_cast<float>(v1.x()),
-                                                    static_cast<float>(v1.y()));
+            qsg_geometry_.allocate(static_cast<int>(1));
+            qsg_geometry_.vertexDataAsPoint2D()[0].set(static_cast<float>(v1.x()),
+                                                       static_cast<float>(v1.y()));
         }
         else
         {
@@ -39,12 +40,12 @@ void PlineSegmentNode::updateGeometry(const cavc::PlineVertex<double> &v1,
                 segmentSubAngle = -segmentSubAngle;
             }
 
-            m_geometry.allocate(static_cast<int>(segmentCount + 1));
+            qsg_geometry_.allocate(static_cast<int>(segmentCount + 1));
 
             for (std::size_t i = 0; i <= segmentCount; ++i)
             {
                 double angle = i * segmentSubAngle + startAngle;
-                m_geometry.vertexDataAsPoint2D()[i].set(
+                qsg_geometry_.vertexDataAsPoint2D()[i].set(
                     static_cast<float>(arc.radius * std::cos(angle) + arc.center.x()),
                     static_cast<float>(arc.radius * std::sin(angle) + arc.center.y()));
             }
@@ -53,3 +54,4 @@ void PlineSegmentNode::updateGeometry(const cavc::PlineVertex<double> &v1,
 
     markDirty(QSGNode::DirtyGeometry);
 }
+} // namespace debugger

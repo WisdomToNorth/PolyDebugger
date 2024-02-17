@@ -38,17 +38,15 @@ add_executable(PolyGui
     combine/PlineCombineScene.qml
 
     settings/settings.h
+    settings/settings.cpp
     settings/DebuggerSettings.qml
 
-    # offset/plineoffsetalgorithmview.cpp
-    # offset/plineoffsetalgorithmview.h
-    # offset/rawoffsetsegmentsnode.cpp
-    # offset/rawoffsetsegmentsnode.h
-    # offset/PlineOffsetScene.qml
-    # offset/spatialindexboundingboxesnode.h
-
-    # hilbert/demofuncs.cpp
-    # hilbert/demofuncs.h
+    offset/plineoffsetalgorithmview.cpp
+    offset/plineoffsetalgorithmview.h
+    offset/rawoffsetsegmentsnode.cpp
+    offset/rawoffsetsegmentsnode.h
+    offset/PlineOffsetScene.qml
+    offset/spatialindexboundingboxesnode.h
 
     adaptor/geometrycanvasitem.cpp
     adaptor/geometrycanvasitem.h
@@ -69,7 +67,6 @@ add_executable(PolyGui
 
     GeometrySceneView.qml
     main.qml
-    hilbert/HilbertCurveScene.qml
     qml.qrc
 )
 

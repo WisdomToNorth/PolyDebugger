@@ -1,15 +1,18 @@
 #ifndef PLINEOFFSETALGORITHMVIEW_H
 #define PLINEOFFSETALGORITHMVIEW_H
 
-#include "adaptor/geometrycanvasitem.h"
 #include "cavc/polyline.hpp"
 
+#include "adaptor/geometrycanvasitem.h"
+
+class QSGGeometryNode;
+class QSGOpacityNode;
+namespace debugger
+{
+class SpatialIndexBoundingBoxesNode;
 class PolylineNode;
 class PointSetNode;
 class RawOffsetSegmentsNode;
-class QSGGeometryNode;
-class SpatialIndexBoundingBoxesNode;
-class QSGOpacityNode;
 
 class PlineOffsetAlgorithmView : public GeometryCanvasItem
 {
@@ -158,5 +161,5 @@ private:
     bool m_showDualRawOffsetPolyline;
     bool m_showLastPrunedRawOffsets;
 };
-
+} // namespace debugger
 #endif // PLINEOFFSETALGORITHMVIEW_H

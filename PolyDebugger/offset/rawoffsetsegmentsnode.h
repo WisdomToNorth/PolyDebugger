@@ -9,7 +9,8 @@
 #include "cavc/polylineoffset.hpp"
 
 #include "adaptor/plinesegmentnode.h"
-
+namespace debugger
+{
 class RawOffsetSegmentsNode : public QSGOpacityNode
 {
 public:
@@ -18,5 +19,5 @@ public:
     updateGeometry(std::vector<cavc::internal::PlineOffsetSegment<double>> const &rawOffsetSegments,
                    double arcApproxError);
 };
-
+} // namespace debugger
 #endif // RAWOFFSETSEGMENTSNODE_H

@@ -3,24 +3,15 @@
 #include <QQmlContext>
 #include <QSurfaceFormat>
 
-// #include "offset/plineoffsetalgorithmview.h"
 #include "combine/plinecombinealgorithmview.h"
-// #include "hilbert/demofuncs.h"
+#include "offset/plineoffsetalgorithmview.h"
 #include "offsetisland/plineoffsetislandsalgorithmview.h"
 #include "settings/settings.h"
 
+using namespace debugger;
+
 int main(int argc, char *argv[])
 {
-    // qmlRegisterSingletonType<DemoFuncs>("DemoFuncs", 1, 0, "DemoFuncs",
-    //                                     [](QQmlEngine *engine, QJSEngine *scriptEngine) ->
-    //                                     QObject *
-    //                                     {
-    //                                         Q_UNUSED(engine)
-    //                                         Q_UNUSED(scriptEngine)
-
-    //                                         DemoFuncs *demoFuncs = new DemoFuncs();
-    //                                         return demoFuncs;
-    //                                     });
     qmlRegisterType<NgSettings>("NgSettings", 1, 0, "NgSettings");
 
     qmlRegisterType<PlineCombineAlgorithmView>("Polyline", 1, 0, "PlineCombineAlgorithmView");
@@ -28,7 +19,7 @@ int main(int argc, char *argv[])
     qmlRegisterType<PlineOffsetIslandsAlgorithmView>("Polyline", 1, 0,
                                                      "PlineOffsetIslandsAlgorithmView");
 
-    // qmlRegisterType<PlineOffsetAlgorithmView>("Polyline", 1, 0, "PlineOffsetAlgorithmView");
+    qmlRegisterType<PlineOffsetAlgorithmView>("Polyline", 1, 0, "PlineOffsetAlgorithmView");
 
     QCoreApplication::setAttribute(Qt::AA_EnableHighDpiScaling);
 

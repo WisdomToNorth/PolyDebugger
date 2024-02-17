@@ -11,6 +11,8 @@
 #include "adaptor/polylinenode.h"
 #include "graphicshelpers.h"
 
+namespace debugger
+{
 using namespace cavc;
 
 PlineCombineAlgorithmView::PlineCombineAlgorithmView(QQuickItem *parent) :
@@ -438,3 +440,4 @@ void PlineCombineAlgorithmView::mouseReleaseEvent(QMouseEvent *event)
     m_vertexGrabbed = std::numeric_limits<std::size_t>::max();
     event->accept();
 }
+} // namespace debugger

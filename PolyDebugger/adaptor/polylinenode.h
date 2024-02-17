@@ -10,6 +10,9 @@
 #include "cavc/vector2.hpp"
 #include "ngpoly/ngpolygonset.h"
 
+namespace debugger
+{
+
 class FlatColorGeometryNode;
 class PointSetNode;
 
@@ -65,5 +68,5 @@ private:
     QColor m_vertexesColor;
     bool m_isVisible;
 };
-
+} // namespace debugger
 #endif // POLYLINENODE_H

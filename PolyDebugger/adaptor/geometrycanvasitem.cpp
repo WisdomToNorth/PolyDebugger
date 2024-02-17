@@ -1,6 +1,9 @@
 #include "geometrycanvasitem.h"
 
 #include "cavc/mathutils.hpp"
+
+namespace debugger
+{
 using namespace cavc;
 
 GeometryCanvasItem::GeometryCanvasItem(QQuickItem *parent) : QQuickItem(parent), m_uiScaleFactor(20)
@@ -83,3 +86,4 @@ std::size_t GeometryCanvasItem::vertexUnderPosition(QPointF uiGlobalPos,
     // TODO
     return vertexGrabbed;
 }
+} // namespace debugger

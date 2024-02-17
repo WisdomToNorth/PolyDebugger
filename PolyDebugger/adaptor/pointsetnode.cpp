@@ -5,6 +5,8 @@
 #include "graphicshelpers.h"
 #include "simplecirclenode.h"
 
+namespace debugger
+{
 PointSetNode::PointSetNode()
 {
 }
@@ -48,12 +50,9 @@ void PointSetNode::addPolylineVertexes(const cavc::Polyline<double> &polyline)
 {
     for (auto const &v : polyline.vertexes())
     {
-        // std::cout << "x: " << v.x() << " y: " << v.y() << std::endl;
         addPoint(v.x(), v.y());
     }
 }
-//    static bool getNextSegment(double &x0, double &y0, double &x1, double &y1, double &center_x,
-//   double &center_y, double &radius, int &type)
 
 void PointSetNode::addPolygonVertexes(NGPolygonSet const &polygonSet)
 {
@@ -62,31 +61,7 @@ void PointSetNode::addPolygonVertexes(NGPolygonSet const &polygonSet)
 
     while (polygonSet.getNextSegment(x0, y0, x1, y1, center_x, center_y, radius, type))
     {
-        // if (type == 0)
-        // {
         addPoint(x0, y0);
-        // addPoint(x1, y1);// Confirmed that this point is not needed
-
-        // }
-        // else if (type == 1)
-        // {
-        //     addPoint(x0, y0);
-        //     addPoint(x1, y1);
-        //     auto newNode = new SimpleCircleNode();
-        //     newNode->setColor(m_color);
-        //     newNode->setGeometry(center_x, center_y, radius);
-        //     newNode->setFlag(QSGNode::OwnedByParent);
-        //     appendChildNode(newNode);
-        // }
-        // else if (type == 2)
-        // {
-        //     addPoint(x0, y0);
-        //     addPoint(x1, y1);
-        //     auto newNode = new SimpleCircleNode();
-        //     newNode->setColor(m_color);
-        //     newNode->setGeometry(center_x, center_y, radius);
-        //     newNode->setFlag(QSGNode::OwnedByParent);
-        //     appendChildNode(newNode);
-        // }
     }
 }
+} // namespace debugger

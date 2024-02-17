@@ -2,7 +2,8 @@
 #define SIMPLECIRCLENODE_H
 
 #include "flatcolorgeometrynode.h"
-
+namespace debugger
+{
 class SimpleCircleNode : public FlatColorGeometryNode
 {
 public:
@@ -15,5 +16,6 @@ private:
     qreal m_yPos;
     void updateGeometry();
 };
+} // namespace debugger
 
 #endif // SIMPLECIRCLENODE_H

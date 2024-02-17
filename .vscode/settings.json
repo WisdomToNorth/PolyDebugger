@@ -4,7 +4,7 @@
         "regressions/": true,
         "build/": true
     },
-    "editor.defaultFormatter": "esbenp.prettier-vscode", // 启用粘滞滚动，即显示上一级对应的代码
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
     "cmake.debugConfig": {
         "args": [
             //"--gtest_filter=*ISABLED_brep_file_converter"

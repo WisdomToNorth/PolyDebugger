@@ -1,11 +1,9 @@
-// import "hilbert"
-// import "offset"
-
 import QtQuick 2.13
 import QtQuick.Controls 2.13
 import QtQuick.Layouts 1.13
 import QtQuick.Window 2.13
 import "combine"
+import "offset"
 import "offsetisland"
 import "settings"
 
@@ -22,8 +20,6 @@ ApplicationWindow {
     title: qsTr("Cavalier Contours")
 
     font {
-        // pointSize: 20
-        // pixelSize: adjustFontSize(20)
         family: "Consolas"
     }
 
@@ -36,22 +32,20 @@ ApplicationWindow {
             border.color: "grey"
 
             StackLayout {
-                // HilbertCurveScene {
-                // }
-                // PlineOffsetScene {
-                // }
-
                 anchors.fill: parent
                 anchors.margins: 2
                 currentIndex: tabBar.currentIndex
 
-                DebuggerSettings {
+                PlineOffsetScene {
                 }
 
                 PlineOffsetIslandsScene {
                 }
 
                 PlineCombineScene {
+                }
+
+                DebuggerSettings {
                 }
 
             }
@@ -63,14 +57,12 @@ ApplicationWindow {
     header: TabBar {
         id: tabBar
 
-        // TabButton {
-        //     text: "Hilbert Curve"
-        // }
-        // TabButton {
-        //     text: "Polyline Offset"
-        // }
         TabButton {
             text: "Polyline Offset Islands"
+        }
+
+        TabButton {
+            text: "Polyline Offset"
         }
 
         TabButton {

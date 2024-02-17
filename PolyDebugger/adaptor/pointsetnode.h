@@ -5,7 +5,8 @@
 
 #include "cavc/polyline.hpp"
 #include "ngpoly/ngpolygonset.h"
-
+namespace debugger
+{
 class PointSetNode : public QSGOpacityNode
 {
 public:
@@ -23,5 +24,5 @@ public:
 private:
     QColor m_color;
 };
-
+} // namespace debugger
 #endif // POINTSETNODE_H

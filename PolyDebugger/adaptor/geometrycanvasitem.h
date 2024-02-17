@@ -8,6 +8,8 @@
 #include "ngpoly/ngpolygonset.h"
 
 /// Base class for setting up interactive geometry views.
+namespace debugger
+{
 class GeometryCanvasItem : public QQuickItem
 {
     Q_OBJECT
@@ -33,5 +35,5 @@ protected:
     std::size_t vertexUnderPosition(QPointF uiGlobalPos, const cavc::Polyline<double> &pline);
     std::size_t vertexUnderPosition(QPointF uiGlobalPos, const NGPolygonSet &polygonSet);
 };
-
+} // namespace debugger
 #endif // GEOMETRYCANVASITEM_H

@@ -8,12 +8,13 @@
 #include "settings/settings.h"
 
 using namespace cavc;
-
+namespace debugger
+{
 PlineOffsetIslandsAlgorithmView::PlineOffsetIslandsAlgorithmView(QQuickItem *parent) :
     GeometryCanvasItem(parent), m_showVertexes(true), m_offsetDelta(1), m_offsetCount(20),
     m_vertexGrabbed(std::numeric_limits<std::size_t>::max()), m_polylineGrabbed(nullptr)
 {
-    auto machine_type = NgSettings::instance().appAlgorithmCore();
+    auto machine_type = NgSettings::AppAlgorithmCore();
     std::cout << "type in offset class: " << static_cast<int>(machine_type) << std::endl;
     switch (machine_type)
     {
@@ -284,3 +285,4 @@ void PlineOffsetIslandsAlgorithmView::buildCavcData()
     invertDirection(island3);
     m_cwLoops.push_back(std::move(island3));
 }
+} // namespace debugger

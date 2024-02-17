@@ -1,13 +1,14 @@
 #include "flatcolorgeometrynode.h"
-
+namespace debugger
+{
 FlatColorGeometryNode::FlatColorGeometryNode(bool useUInt32Index) :
     m_isVisible(true),
-    m_geometry(QSGGeometry::defaultAttributes_Point2D(), 0, 0,
-               useUInt32Index ? QSGGeometry::UnsignedIntType : QSGGeometry::UnsignedShortType)
+    qsg_geometry_(QSGGeometry::defaultAttributes_Point2D(), 0, 0,
+                  useUInt32Index ? QSGGeometry::UnsignedIntType : QSGGeometry::UnsignedShortType)
 {
-    m_geometry.setLineWidth(1);
-    m_geometry.setDrawingMode(QSGGeometry::DrawLineStrip);
-    setGeometry(&m_geometry);
+    qsg_geometry_.setLineWidth(1);
+    qsg_geometry_.setDrawingMode(QSGGeometry::DrawLineStrip);
+    setGeometry(&qsg_geometry_);
     m_material.setColor(Qt::darkGreen);
     setMaterial(&m_material);
 }
@@ -41,3 +42,4 @@ bool FlatColorGeometryNode::isSubtreeBlocked() const
 {
     return !m_isVisible;
 }
+} // namespace debugger

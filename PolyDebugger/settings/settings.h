@@ -5,6 +5,8 @@
 
 #include "adaptor/geometrycanvasitem.h"
 
+namespace debugger
+{
 class NgSettings : public QQuickItem
 {
     Q_OBJECT
@@ -20,18 +22,16 @@ public:
     };
     Q_ENUM(AppAlgorithmCore)
 
-    static NgSettings &instance()
+    NgSettings(QQuickItem *parent = nullptr){};
+    static AppAlgorithmCore getCurAlgorithmCore()
     {
-        static NgSettings instance;
-        return instance;
+        return g_machineType;
     }
 
 signals:
     void appAlgorithmCoreChanged(AppAlgorithmCore appAlgorithmCore);
 
 public:
-    NgSettings(QQuickItem *parent = nullptr){};
-
     AppAlgorithmCore appAlgorithmCore() const
     {
         return g_machineType;
@@ -48,7 +48,8 @@ public:
     }
 
 private:
-    AppAlgorithmCore g_machineType = kNGPoly;
+    static AppAlgorithmCore g_machineType;
 };
+} // namespace debugger
 
 #endif // PLINECOMBINEALGORITHMVIEW_H

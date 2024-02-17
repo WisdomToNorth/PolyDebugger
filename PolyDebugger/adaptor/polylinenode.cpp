@@ -5,6 +5,9 @@
 #include "flatcolorgeometrynode.h"
 #include "graphicshelpers.h"
 #include "pointsetnode.h"
+
+namespace debugger
+{
 using namespace cavc;
 
 namespace
@@ -393,3 +396,4 @@ void PolylineNode::updateVertexesNode(NGPolygonSet const &polygonSet)
     m_vertexesNode->clear();
     m_vertexesNode->addPolygonVertexes(polygonSet);
 }
+} // namespace debugger

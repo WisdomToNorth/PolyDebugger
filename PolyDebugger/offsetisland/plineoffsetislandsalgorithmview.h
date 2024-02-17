@@ -7,9 +7,10 @@
 
 #include "adaptor/geometrycanvasitem.h"
 
-class PolylineNode;
 class QSGOpacityNode;
-
+namespace debugger
+{
+class PolylineNode;
 class PlineOffsetIslandsAlgorithmView : public GeometryCanvasItem
 {
     Q_OBJECT
@@ -59,5 +60,5 @@ private:
     std::size_t m_vertexGrabbed;
     QPointF m_origVertexGlobalPos;
 };
-
+} // namespace debugger
 #endif // PLINEOFFSETISLANDSALGORITHMVIEW_H
