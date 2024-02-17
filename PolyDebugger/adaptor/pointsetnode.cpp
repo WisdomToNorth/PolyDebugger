@@ -54,12 +54,12 @@ void PointSetNode::addPolylineVertexes(const cavc::Polyline<double> &polyline)
     }
 }
 
-void PointSetNode::addPolygonVertexes(NGPolygonSet const &polygonSet)
+void PointSetNode::addPolygonVertexes(const NGPolygonSet *polygonSet)
 {
     double x0, y0, x1, y1, center_x, center_y, radius;
     int type;
 
-    while (polygonSet.getNextSegment(x0, y0, x1, y1, center_x, center_y, radius, type))
+    while (polygonSet->getNextSegment(x0, y0, x1, y1, center_x, center_y, radius, type))
     {
         addPoint(x0, y0);
     }

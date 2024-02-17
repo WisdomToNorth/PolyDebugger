@@ -44,7 +44,7 @@ public:
     void updateGeometry(cavc::Polyline<double> const &pline, PathDrawMode pathDrawMode = NormalPath,
                         double arcApproxError = 0.005);
     /*ngpoly*/
-    void updateGeometry(NGPolygonSet const &polygonSet, PathDrawMode pathDrawMode = NormalPath,
+    void updateGeometry(const NGPolygonSet *polygonSet, PathDrawMode pathDrawMode = NormalPath,
                         double arcApproxError = 0.005);
 
 private:
@@ -54,9 +54,9 @@ private:
     void updateVertexesNode(cavc::Polyline<double> const &pline);
 
     /*ngpoly*/
-    void updatePathNode(NGPolygonSet const &polygonSet, double arcApproxError,
+    void updatePathNode(const NGPolygonSet *polygonSet, double arcApproxError,
                         PathDrawMode drawMode);
-    void updateVertexesNode(NGPolygonSet const &polygonSet);
+    void updateVertexesNode(NGPolygonSet const *polygonSet);
 
 private:
     PointSetNode *m_vertexesNode;

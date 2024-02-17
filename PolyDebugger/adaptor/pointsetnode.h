@@ -11,7 +11,7 @@ class PointSetNode : public QSGOpacityNode
 {
 public:
     void addPolylineVertexes(cavc::Polyline<double> const &polyline);
-    void addPolygonVertexes(NGPolygonSet const &polygonSet);
+    void addPolygonVertexes(const NGPolygonSet *polygonSet);
 
 public:
     PointSetNode();

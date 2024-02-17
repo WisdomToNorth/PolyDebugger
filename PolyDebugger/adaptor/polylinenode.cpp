@@ -33,7 +33,7 @@ void PolylineNode::updateGeometry(const cavc::Polyline<double> &pline, PathDrawM
     markDirty(QSGNode::DirtyGeometry);
 }
 
-void PolylineNode::updateGeometry(NGPolygonSet const &polygonSet, PathDrawMode pathDrawMode,
+void PolylineNode::updateGeometry(const NGPolygonSet *polygonSet, PathDrawMode pathDrawMode,
                                   double arcApproxError)
 {
     updatePathNode(polygonSet, arcApproxError, pathDrawMode);
@@ -243,9 +243,11 @@ void PolylineNode::updatePathNode(const cavc::Polyline<double> &pline, double ar
     m_pathNode->markDirty(QSGNode::DirtyGeometry);
 }
 
-void PolylineNode::updatePathNode(NGPolygonSet const &polygonSet, double arcApproxError,
+void PolylineNode::updatePathNode(const NGPolygonSet *_polygonSet, double arcApproxError,
                                   PathDrawMode drawMode)
 {
+    const NGPolygonSet &polygonSet = *_polygonSet;
+
     std::vector<cavc::Vector2<float>> m_vertexesBuffer;
     double x0, y0, x1, y1, center_x, center_y, radius;
     // update vertexes buffer
@@ -382,7 +384,7 @@ void PolylineNode::updateVertexesNode(const cavc::Polyline<double> &pline)
     m_vertexesNode->addPolylineVertexes(pline);
 }
 
-void PolylineNode::updateVertexesNode(NGPolygonSet const &polygonSet)
+void PolylineNode::updateVertexesNode(NGPolygonSet const *polygonSet)
 {
     if (!m_vertexesNode)
     {

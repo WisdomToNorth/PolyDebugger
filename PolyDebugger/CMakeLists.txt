@@ -56,6 +56,8 @@ add_executable(PolyGui
     adaptor/pointsetnode.h
     adaptor/polylinenode.cpp
     adaptor/polylinenode.h
+    adaptor/viewmodel.h
+    adaptor/viewmodel.cpp
 
     flatcolorgeometrynode.cpp
     flatcolorgeometrynode.h

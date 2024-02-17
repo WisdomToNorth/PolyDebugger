@@ -10,6 +10,7 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 enable_language(C)
 
 add_subdirectory(clipper2)
+add_subdirectory(clipper2full)
 add_subdirectory(cavc)
 add_subdirectory(ngpoly)
 add_subdirectory(PolyDebugger)

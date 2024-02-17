@@ -117,7 +117,19 @@
         "xtree": "cpp",
         "qplaintextedit": "cpp",
         "__tree": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "xfacet": "cpp",
+        "xiosbase": "cpp",
+        "xlocale": "cpp",
+        "xlocbuf": "cpp",
+        "xlocinfo": "cpp",
+        "xlocmes": "cpp",
+        "xlocmon": "cpp",
+        "xlocnum": "cpp",
+        "xloctime": "cpp",
+        "xmemory": "cpp",
+        "xtr1common": "cpp",
+        "xutility": "cpp"
     },
     "[qml]": {
         "editor.defaultFormatter": "Delgan.qml-format",
