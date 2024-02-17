@@ -52,12 +52,11 @@ SplitView {
                 selectByMouse: true // 鼠标可以选中文本
                 anchors.top: offsetItem.top
                 text: parseFloat(offsetSlider.value).toFixed(2)
-                onTextChanged: {
+                onEditingFinished: {
                     let f = parseFloat(text);
-                    if (isNaN(f))
-                        return ;
+                    if (!isNaN(f))
+                        offsetSlider.value = f;
 
-                    offsetSlider.value = f;
                 }
 
                 validator: DoubleValidator {

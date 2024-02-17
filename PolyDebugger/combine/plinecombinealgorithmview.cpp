@@ -8,7 +8,7 @@
 #include "cavc/polylineintersects.hpp"
 
 #include "adaptor/pointsetnode.h"
-#include "adaptor/polylinenode.h"
+#include "adaptor/viewmodel.h"
 #include "graphicshelpers.h"
 
 namespace debugger
@@ -32,50 +32,6 @@ PlineCombineAlgorithmView::PlineCombineAlgorithmView(QQuickItem *parent) :
     m_plineB.addVertex(6, 10, 0);
     m_plineB.addVertex(3, 10, 0);
     m_plineB.isClosed() = true;
-
-    //  m_plineA.addVertex(0, 25, 1);
-    //  m_plineA.addVertex(-4, 0, 0);
-    ////  m_plineA.addVertex(-8, 0, 0);
-    //  m_plineA.addVertex(2, 0, 1);
-    //  m_plineA.addVertex(10, 0, -0.5);
-    //  m_plineA.addVertex(8, 9, 0.374794619217547);
-    //  m_plineA.addVertex(21, 0, 0);
-    //  m_plineA.addVertex(23, 0, 1);
-    //  m_plineA.addVertex(32, 0, -0.5);
-    //  m_plineA.addVertex(28, 0, 0.5);
-    //  m_plineA.addVertex(39, 21, 0);
-    //  m_plineA.addVertex(28, 12, 0.5);
-    //  m_plineA.isClosed() = true;
-
-    //  m_plineB = m_plineA;
-    //  //  invertDirection(m_plineA);
-
-    //  //  m_plineB.addVertex(0, 25, 0);
-    //  //  m_plineB.addVertex(0, 0, 0);
-    //  //  m_plineB.addVertex(5, 15, 0);
-    //  //  m_plineB.isClosed() = true;
-    //  //  invertDirection(m_plineB);
-
-    //  m_plineB[0].y() = 30;
-    //  m_plineB[1].x() = -1;
-    //  m_plineB[2].x() = 3;
-    //    invertDirection(m_plineB);
-    //    m_plineB.addVertex(-15,20,0);
-    //    m_plineB.addVertex(-15,10,0);
-    //    m_plineB.addVertex(5,10,0);
-    //    m_plineB.addVertex(5,20,0);
-    //    m_plineB.isClosed() = true;
-
-    //    auto radius = 20;
-    //    auto centerX = 0;
-    //    auto centerY = 0;
-    //    std::size_t segmentCount = 10;
-    //    for (std::size_t i = 0; i < segmentCount; ++i) {
-    //      double angle = static_cast<double>(i) * utils::tau<double>() / segmentCount;
-    //      m_plineB.addVertex(radius * std::cos(angle) + centerX,
-    //                                radius * std::sin(angle) + centerY, i % 2 == 0 ? 1 : -1);
-    //    }
-    //    m_plineB.isClosed() = true;
 
     m_testPoint.addVertex(1, 1, 0);
 }
@@ -199,19 +155,19 @@ QSGNode *PlineCombineAlgorithmView::updatePaintNode(QSGNode *oldNode,
     if (!oldNode)
     {
         rootNode = new QSGTransformNode();
-        m_polylineANode = new PolylineNode();
+        m_polylineANode = new NgViewModel();
         m_polylineANode->setFlag(QSGNode::OwnedByParent);
         m_polylineANode->setColor(Qt::blue);
         m_polylineANode->setVertexesColor(Qt::blue);
         rootNode->appendChildNode(m_polylineANode);
 
-        m_polylineBNode = new PolylineNode();
+        m_polylineBNode = new NgViewModel();
         m_polylineBNode->setFlag(QSGNode::OwnedByParent);
         m_polylineBNode->setColor(Qt::red);
         m_polylineBNode->setVertexesColor(Qt::red);
         rootNode->appendChildNode(m_polylineBNode);
 
-        m_testPointNode = new PolylineNode();
+        m_testPointNode = new NgViewModel();
         m_testPointNode->setFlag(QSGNode::OwnedByParent);
         m_testPointNode->setVertexesColor(Qt::darkMagenta);
         rootNode->appendChildNode(m_testPointNode);
@@ -227,13 +183,13 @@ QSGNode *PlineCombineAlgorithmView::updatePaintNode(QSGNode *oldNode,
     m_polylineANode->setVertexesVisible(m_showVertexes);
     m_polylineBNode->setVertexesVisible(m_showVertexes);
 
-    m_polylineANode->updateGeometry(m_plineA);
-    m_polylineBNode->updateGeometry(m_plineB);
+    m_polylineANode->updateVM(m_plineA);
+    m_polylineBNode->updateVM(m_plineB);
 
     m_testPointNode->setVertexesVisible(m_showWindingNumberPoint);
     if (m_showWindingNumberPoint)
     {
-        m_testPointNode->updateGeometry(m_testPoint);
+        m_testPointNode->updateVM(m_testPoint);
     }
 
     auto plineASpatialIndex = createApproxSpatialIndex(m_plineA);
@@ -288,21 +244,20 @@ QSGNode *PlineCombineAlgorithmView::updatePaintNode(QSGNode *oldNode,
         m_dynamicPlinesParentNode->setOpacity(1);
 
         std::size_t sliceIndex = 0;
-        PolylineNode *plineNode =
-            static_cast<PolylineNode *>(m_dynamicPlinesParentNode->firstChild());
-        auto addPline = [&](cavc::Polyline<double> const &pline,
-                            PolylineNode::PathDrawMode drawMode = PolylineNode::NormalPath)
+        NgViewModel *plineNode =
+            static_cast<NgViewModel *>(m_dynamicPlinesParentNode->firstChild());
+        auto addPline = [&](cavc::Polyline<double> const &pline, bool is_hole)
         {
             if (!plineNode)
             {
-                plineNode = new PolylineNode();
+                plineNode = new NgViewModel();
                 m_dynamicPlinesParentNode->appendChildNode(plineNode);
             }
             plineNode->setColor(gh::indexToColor(sliceIndex));
             plineNode->setIsVisible(true);
             plineNode->setVertexesVisible(false);
-            plineNode->updateGeometry(pline, drawMode);
-            plineNode = static_cast<PolylineNode *>(plineNode->nextSibling());
+            plineNode->updateVM(pline, is_hole);
+            plineNode = static_cast<NgViewModel *>(plineNode->nextSibling());
             sliceIndex++;
         };
 
@@ -311,7 +266,7 @@ QSGNode *PlineCombineAlgorithmView::updatePaintNode(QSGNode *oldNode,
             auto result = internal::processForCombine(m_plineA, m_plineB, plineASpatialIndex);
             for (const auto &slice : result.coincidentSlices)
             {
-                addPline(slice);
+                addPline(slice, false);
             }
         }
         else
@@ -333,19 +288,19 @@ QSGNode *PlineCombineAlgorithmView::updatePaintNode(QSGNode *oldNode,
 
             for (const auto &slice : combineResult.remaining)
             {
-                addPline(slice);
+                addPline(slice, false);
             }
 
             for (const auto &slice : combineResult.subtracted)
             {
-                addPline(slice, PolylineNode::DashedPath);
+                addPline(slice, true);
             }
         }
 
         while (plineNode)
         {
             plineNode->setIsVisible(false);
-            plineNode = static_cast<PolylineNode *>(plineNode->nextSibling());
+            plineNode = static_cast<NgViewModel *>(plineNode->nextSibling());
         }
     }
     else

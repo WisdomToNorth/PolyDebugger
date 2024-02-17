@@ -9,7 +9,7 @@ class QSGGeometryNode;
 class QSGOpacityNode;
 namespace debugger
 {
-class PolylineNode;
+class NgViewModel;
 class PointSetNode;
 class PlineCombineAlgorithmView : public GeometryCanvasItem
 {
@@ -81,9 +81,9 @@ private:
     cavc::Polyline<double> *m_polylineGrabbed;
 
 private:
-    PolylineNode *m_polylineANode;
-    PolylineNode *m_polylineBNode;
-    PolylineNode *m_testPointNode;
+    NgViewModel *m_polylineANode;
+    NgViewModel *m_polylineBNode;
+    NgViewModel *m_testPointNode;
     PointSetNode *m_intersectsNode;
 
     void setWindingNumber(int windingNumber);

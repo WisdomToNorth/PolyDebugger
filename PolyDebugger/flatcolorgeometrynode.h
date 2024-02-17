@@ -16,7 +16,7 @@ public:
     bool isSubtreeBlocked() const override;
 
 protected:
-    bool m_isVisible;
+    bool visible_;
     QSGGeometry qsg_geometry_;
     QSGFlatColorMaterial m_material;
 };

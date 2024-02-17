@@ -4,7 +4,8 @@
 
 #include "cavc/polylineoffsetislands.hpp"
 
-#include "adaptor/polylinenode.h"
+// #include "adaptor/polylinenode.h"
+#include "adaptor/viewmodel.h"
 #include "settings/settings.h"
 
 using namespace cavc;
@@ -90,37 +91,35 @@ QSGNode *PlineOffsetIslandsAlgorithmView::updatePaintNode(QSGNode *oldNode,
     }
     rootNode->setMatrix(m_realToUICoord);
 
-    PolylineNode *plineNode = static_cast<PolylineNode *>(m_dynamicPlinesParentNode->firstChild());
+    NgViewModel *plineNode = static_cast<NgViewModel *>(m_dynamicPlinesParentNode->firstChild());
 
-    auto addPline = [&](cavc::Polyline<double> const &pline,
-                        PolylineNode::PathDrawMode drawMode = PolylineNode::NormalPath,
+    auto addPline = [&](cavc::Polyline<double> const &pline, bool is_hole,
                         QColor color = QColor("blue"), bool vertexesVisible = false,
                         QColor vertexesColor = QColor("red"))
     {
         if (!plineNode)
         {
-            plineNode = new PolylineNode();
+            plineNode = new NgViewModel();
             m_dynamicPlinesParentNode->appendChildNode(plineNode);
         }
         plineNode->setColor(color);
         plineNode->setIsVisible(true);
         plineNode->setVertexesVisible(vertexesVisible);
         plineNode->setVertexesColor(vertexesColor);
-        plineNode->updateGeometry(pline, drawMode);
-        plineNode = static_cast<PolylineNode *>(plineNode->nextSibling());
+        plineNode->updateVM(pline, is_hole);
+        plineNode = static_cast<NgViewModel *>(plineNode->nextSibling());
     };
 
     // outer loops
     for (auto const &loop : m_ccwLoops)
     {
-        addPline(loop, PolylineNode::PathDrawMode::NormalPath, QColor("blue"), m_showVertexes,
-                 QColor("blue"));
+        addPline(loop, false, QColor("blue"), m_showVertexes, QColor("blue"));
     }
 
     // islands
     for (auto const &island : m_cwLoops)
     {
-        addPline(island, PolylineNode::PathDrawMode::DashedPath, QColor("red"), m_showVertexes);
+        addPline(island, true, QColor("red"), m_showVertexes);
     }
 
     if (!utils::fuzzyEqual(m_offsetDelta, 0.0) && m_offsetCount > 0)
@@ -146,11 +145,11 @@ QSGNode *PlineOffsetIslandsAlgorithmView::updatePaintNode(QSGNode *oldNode,
             }
             for (auto const &loop : loopSet.cwLoops)
             {
-                addPline(loop.polyline);
+                addPline(loop.polyline, false);
             }
             for (auto const &loop : loopSet.ccwLoops)
             {
-                addPline(loop.polyline);
+                addPline(loop.polyline, false);
             }
             i += 1;
         }
@@ -159,7 +158,7 @@ QSGNode *PlineOffsetIslandsAlgorithmView::updatePaintNode(QSGNode *oldNode,
     while (plineNode)
     {
         plineNode->setIsVisible(false);
-        plineNode = static_cast<PolylineNode *>(plineNode->nextSibling());
+        plineNode = static_cast<NgViewModel *>(plineNode->nextSibling());
     }
 
     return rootNode;

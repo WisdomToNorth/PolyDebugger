@@ -2,7 +2,7 @@
 namespace debugger
 {
 FlatColorGeometryNode::FlatColorGeometryNode(bool useUInt32Index) :
-    m_isVisible(true),
+    visible_(true),
     qsg_geometry_(QSGGeometry::defaultAttributes_Point2D(), 0, 0,
                   useUInt32Index ? QSGGeometry::UnsignedIntType : QSGGeometry::UnsignedShortType)
 {
@@ -26,20 +26,20 @@ void FlatColorGeometryNode::setColor(const QColor &color)
 
 bool FlatColorGeometryNode::isVisible() const
 {
-    return m_isVisible;
+    return visible_;
 }
 
 void FlatColorGeometryNode::setIsVisible(bool isVisible)
 {
-    if (m_isVisible != isVisible)
+    if (visible_ != isVisible)
     {
-        m_isVisible = isVisible;
+        visible_ = isVisible;
         markDirty(QSGNode::DirtySubtreeBlocked);
     }
 }
 
 bool FlatColorGeometryNode::isSubtreeBlocked() const
 {
-    return !m_isVisible;
+    return !visible_;
 }
 } // namespace debugger

@@ -39,7 +39,7 @@ SplitView {
 
                     implicitWidth: parent.width
                     model: ["Calc", "NgPoly", "Slipper"]
-                    currentIndex: 1
+                    currentIndex: 0
                 }
 
             }

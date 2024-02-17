@@ -9,7 +9,7 @@
 
 #include "adaptor/plinesegmentnode.h"
 #include "adaptor/pointsetnode.h"
-#include "adaptor/polylinenode.h"
+#include "adaptor/viewmodel.h"
 #include "graphicshelpers.h"
 #include "rawoffsetsegmentsnode.h"
 #include "spatialindexboundingboxesnode.h"
@@ -249,17 +249,17 @@ QSGNode *PlineOffsetAlgorithmView::updatePaintNode(QSGNode *oldNode,
     if (!oldNode)
     {
         rootNode = new QSGTransformNode();
-        m_origPolylineNode = new PolylineNode();
+        m_origPolylineNode = new NgViewModel();
         m_origPolylineNode->setVertexesVisible(true);
         m_origPolylineNode->setFlag(QSGNode::OwnedByParent);
         rootNode->appendChildNode(m_origPolylineNode);
 
-        m_rawOffsetPolylineNode = new PolylineNode();
+        m_rawOffsetPolylineNode = new NgViewModel();
         m_rawOffsetPolylineNode->setFlag(QSGNode::OwnedByParent);
         m_rawOffsetPolylineNode->setColor(Qt::darkGreen);
         rootNode->appendChildNode(m_rawOffsetPolylineNode);
 
-        m_dualRawOffsetPolylineNode = new PolylineNode();
+        m_dualRawOffsetPolylineNode = new NgViewModel();
         m_dualRawOffsetPolylineNode->setFlag(QSGNode::OwnedByParent);
         m_dualRawOffsetPolylineNode->setColor(Qt::darkMagenta);
         rootNode->appendChildNode(m_dualRawOffsetPolylineNode);
@@ -288,7 +288,8 @@ QSGNode *PlineOffsetAlgorithmView::updatePaintNode(QSGNode *oldNode,
     const cavc::Polyline<double> &prunedPline =
         pruneSingularities(input_polyline_, utils::realPrecision<double>());
     m_origPolylineNode->setVertexesVisible(m_showOrigPlineVertexes);
-    m_origPolylineNode->updateGeometry(prunedPline, PolylineNode::NormalPath, m_arcApproxError);
+    m_origPolylineNode->setArcApproxError(m_arcApproxError);
+    m_origPolylineNode->updateVM(prunedPline, false);
 
     // raw offset polyline
     cavc::Polyline<double> rawOffsetPline;
@@ -297,8 +298,8 @@ QSGNode *PlineOffsetAlgorithmView::updatePaintNode(QSGNode *oldNode,
         rawOffsetPline = internal::createRawOffsetPline(prunedPline, m_plineOffset);
         m_rawOffsetPolylineNode->setIsVisible(true);
         m_rawOffsetPolylineNode->setVertexesVisible(m_showRawOffsetPlineVertexes);
-        m_rawOffsetPolylineNode->updateGeometry(rawOffsetPline, PolylineNode::NormalPath,
-                                                m_arcApproxError);
+        m_rawOffsetPolylineNode->setArcApproxError(m_arcApproxError);
+        m_rawOffsetPolylineNode->updateVM(rawOffsetPline, false);
     }
     else
     {
@@ -312,8 +313,8 @@ QSGNode *PlineOffsetAlgorithmView::updatePaintNode(QSGNode *oldNode,
         dualRawOffsetPline = internal::createRawOffsetPline(prunedPline, -m_plineOffset);
         m_dualRawOffsetPolylineNode->setIsVisible(true);
         m_dualRawOffsetPolylineNode->setVertexesVisible(m_showRawOffsetPlineVertexes);
-        m_dualRawOffsetPolylineNode->updateGeometry(dualRawOffsetPline, PolylineNode::NormalPath,
-                                                    m_arcApproxError);
+        m_dualRawOffsetPolylineNode->setArcApproxError(m_arcApproxError);
+        m_dualRawOffsetPolylineNode->updateVM(dualRawOffsetPline, false);
     }
     else
     {
@@ -481,19 +482,21 @@ QSGNode *PlineOffsetAlgorithmView::updatePaintNode(QSGNode *oldNode,
                                                                dualRawOffsetPline, m_plineOffset);
 
         std::size_t sliceIndex = 0;
-        PolylineNode *sliceNode = static_cast<PolylineNode *>(m_slicesParentNode->firstChild());
+        NgViewModel *sliceNode = static_cast<NgViewModel *>(m_slicesParentNode->firstChild());
         auto addPline = [&](cavc::Polyline<double> const &pline)
         {
             if (!sliceNode)
             {
-                sliceNode = new PolylineNode();
+                sliceNode = new NgViewModel();
                 m_slicesParentNode->appendChildNode(sliceNode);
             }
             sliceNode->setColor(gh::indexToColor(sliceIndex));
             sliceNode->setIsVisible(true);
             sliceNode->setVertexesVisible(false);
-            sliceNode->updateGeometry(pline, PolylineNode::NormalPath, m_arcApproxError);
-            sliceNode = static_cast<PolylineNode *>(sliceNode->nextSibling());
+            sliceNode->setArcApproxError(m_arcApproxError);
+            sliceNode->updateVM(pline, false);
+
+            sliceNode = static_cast<NgViewModel *>(sliceNode->nextSibling());
             sliceIndex++;
         };
 
@@ -527,7 +530,7 @@ QSGNode *PlineOffsetAlgorithmView::updatePaintNode(QSGNode *oldNode,
         while (sliceNode)
         {
             sliceNode->setIsVisible(false);
-            sliceNode = static_cast<PolylineNode *>(sliceNode->nextSibling());
+            sliceNode = static_cast<NgViewModel *>(sliceNode->nextSibling());
         }
     }
     else if (m_slicesParentNode)
@@ -545,21 +548,22 @@ QSGNode *PlineOffsetAlgorithmView::updatePaintNode(QSGNode *oldNode,
         }
 
         m_repeatOffsetsParentNode->setOpacity(1);
-        PolylineNode *offsetNode =
-            static_cast<PolylineNode *>(m_repeatOffsetsParentNode->firstChild());
+        NgViewModel *offsetNode =
+            static_cast<NgViewModel *>(m_repeatOffsetsParentNode->firstChild());
 
         auto addPline = [&](cavc::Polyline<double> const &pline, QColor color)
         {
             if (!offsetNode)
             {
-                offsetNode = new PolylineNode();
+                offsetNode = new NgViewModel();
                 m_repeatOffsetsParentNode->appendChildNode(offsetNode);
             }
             offsetNode->setColor(color);
             offsetNode->setIsVisible(true);
             offsetNode->setVertexesVisible(false);
-            offsetNode->updateGeometry(pline, PolylineNode::NormalPath, m_arcApproxError);
-            offsetNode = static_cast<PolylineNode *>(offsetNode->nextSibling());
+            offsetNode->setArcApproxError(m_arcApproxError);
+            offsetNode->updateVM(pline, false);
+            offsetNode = static_cast<NgViewModel *>(offsetNode->nextSibling());
         };
 
         if (prunedPline.isClosed())
@@ -617,16 +621,6 @@ QSGNode *PlineOffsetAlgorithmView::updatePaintNode(QSGNode *oldNode,
                 for (const auto &pline : newOffsets)
                 {
                     addPline(pline, QColor("blue"));
-                    //          std::size_t vertexCount = pline.size();
-                    //          double area = getArea(pline);
-                    //          double length = getPathLength(pline);
-                    //          auto extents = getExtents(pline);
-                    //          qDebug().nospace() << qSetRealNumberPrecision(14) << "(" <<
-                    //          vertexCount << ", " << area
-                    //                             << ", " << length << ", " << extents.xMin << ", "
-                    //                             << extents.yMin
-                    //                             << ", " << extents.xMax << ", " << extents.yMax
-                    //                             << ")";
                 }
 
                 prevOffsets = std::move(newOffsets);
@@ -669,7 +663,7 @@ QSGNode *PlineOffsetAlgorithmView::updatePaintNode(QSGNode *oldNode,
         while (offsetNode)
         {
             offsetNode->setIsVisible(false);
-            offsetNode = static_cast<PolylineNode *>(offsetNode->nextSibling());
+            offsetNode = static_cast<NgViewModel *>(offsetNode->nextSibling());
         }
     }
     else if (m_repeatOffsetsParentNode)

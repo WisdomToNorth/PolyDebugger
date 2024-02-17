@@ -10,7 +10,6 @@
 class QSGOpacityNode;
 namespace debugger
 {
-class PolylineNode;
 class PlineOffsetIslandsAlgorithmView : public GeometryCanvasItem
 {
     Q_OBJECT

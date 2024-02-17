@@ -30,27 +30,27 @@ struct VMParameter
      * @param type 0: line, 1: arc in ccw, 2: arc in cw
      */
     int type = 0;
-    bool is_hole = false;
     VMParameter(double x0, double y0, double x1, double y1, double center_x = 0.0,
-                double center_y = 0.0, double radius = 0.0, int type = 0, bool is_hole = false) :
+                double center_y = 0.0, double radius = 0.0, int type = 0) :
         x0(x0),
-        y0(y0), x1(x1), y1(y1), center_x(center_x), center_y(center_y), radius(radius), type(type),
-        is_hole(is_hole){};
+        y0(y0), x1(x1), y1(y1), center_x(center_x), center_y(center_y), radius(radius),
+        type(type){};
 };
 
 class NgViewModel : public QSGOpacityNode
 {
 public:
-    enum PathDrawMode
+    enum Style
     {
-        NormalPath,
-        DashedPath
+        Normal,
+        Dashed
     };
+
     NgViewModel();
 
 public:
     /* cava */
-    void updateVM(const cavc::Polyline<double> &pline);
+    void updateVM(const cavc::Polyline<double> &pline, bool is_hole = false);
     /*ngpoly*/
     void updateVM(NGPolygonSet *polygonSet);
     void updateGeometry();
@@ -82,36 +82,26 @@ public:
     void setIsVisible(bool isVisible);
 
     void setArcApproxError(double arcApproxError);
-    void setDrawMode(PathDrawMode drawMode);
 
 public:
-    cavc::Polyline<double> *polyline_data_;
-    NGPolygonSet *polygonSet_data_;
+    std::pair<cavc::Polyline<double> *, bool> polyline_data_{nullptr, false}; // data,is_hole
+    NGPolygonSet *polygonSet_data_ = nullptr;
 
 private:
-    std::vector<VMParameter> m_vmParameter_;
-    PointSetNode *m_vertexesNode_;
+    typedef std::vector<VMParameter> ParaWire;
 
-    bool m_pathVisible;
-    bool m_vertexesVisible;
-    FlatColorGeometryNode *m_pathNode;
-    QColor m_pathColor;
-    QColor m_vertexesColor;
-    bool m_isVisible;
+    std::vector<std::pair<ParaWire, Style>> vm_params_;
+    PointSetNode *vertexes_;
+
+    bool path_visible_;
+    bool vertexes_visible_;
+    FlatColorGeometryNode *path_node_;
+    QColor path_color_;
+    QColor vertexes_color_;
+    bool visible_;
 
     double arcApproxError_ = 0.005;
-    PathDrawMode drawMode_ = NormalPath;
 };
-
-// struct VMUtils
-// {
-// public:
-//     // IO
-//     static NgViewModel *createVM(cavc::Polyline<double> const &polyline);
-//     static NgViewModel *createVM(const NGPolygonSet *polygonSet);
-//     static void updateVM(NgViewModel *vm, cavc::Polyline<double> const &polyline);
-//     static void updateVM(NgViewModel *vm, const NGPolygonSet *polygonSet);
-// };
 
 } // namespace debugger
 #endif // NgViewModel_H

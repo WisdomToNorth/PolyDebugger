@@ -54,8 +54,6 @@ add_executable(PolyGui
     adaptor/plinesegmentnode.h
     adaptor/pointsetnode.cpp
     adaptor/pointsetnode.h
-    adaptor/polylinenode.cpp
-    adaptor/polylinenode.h
     adaptor/viewmodel.h
     adaptor/viewmodel.cpp
 

@@ -10,7 +10,7 @@ class QSGOpacityNode;
 namespace debugger
 {
 class SpatialIndexBoundingBoxesNode;
-class PolylineNode;
+class NgViewModel;
 class PointSetNode;
 class RawOffsetSegmentsNode;
 
@@ -125,9 +125,9 @@ private:
 
     /*2D geo Data Structure*/
     cavc::Polyline<double> input_polyline_;
-    PolylineNode *m_origPolylineNode;
-    PolylineNode *m_rawOffsetPolylineNode;
-    PolylineNode *m_dualRawOffsetPolylineNode;
+    NgViewModel *m_origPolylineNode;
+    NgViewModel *m_rawOffsetPolylineNode;
+    NgViewModel *m_dualRawOffsetPolylineNode;
     PointSetNode *m_selfIntersectsNode;
 
     RawOffsetSegmentsNode *m_untrimmedSegmentsParentNode;
