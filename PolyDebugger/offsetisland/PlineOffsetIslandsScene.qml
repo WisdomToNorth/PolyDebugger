@@ -3,9 +3,17 @@ import Polyline 1.0
 import QtQuick 2.13
 import QtQuick.Controls 2.13
 import QtQuick.Layouts 1.13
+import QtQuick.Controls.Material 2.12
 
 SplitView {
     id: splitView
+
+    Material.theme: Material.Light
+    Material.accent: Material.Indigo
+    Material.primary: Material.Indigo
+    Material.elevation: 5
+    Material.background: Material.White
+    Material.foreground: Material.Black
 
     orientation: Qt.Horizontal
 
@@ -17,7 +25,6 @@ SplitView {
 
             anchors.fill: parent
         }
-
     }
 
     GroupBox {
@@ -33,7 +40,6 @@ SplitView {
             anchors.top: parent.top
             anchors.topMargin: 15
             topPadding: 5
-            color: "black"
             text: "Offset Delta"
         }
 
@@ -56,14 +62,12 @@ SplitView {
                     let f = parseFloat(text);
                     if (!isNaN(f))
                         offsetSlider.value = f;
-
                 }
 
                 validator: DoubleValidator {
                     bottom: offsetSlider.from
                     top: offsetSlider.to
                 }
-
             }
 
             Slider {
@@ -94,7 +98,6 @@ SplitView {
                 anchors.top: offsetSlider.bottom
                 text: offsetSlider.to
             }
-
         }
 
         Label {
@@ -103,7 +106,6 @@ SplitView {
             anchors.top: offsetItem.bottom
             anchors.topMargin: 30
             topPadding: 5
-            color: "black"
             text: "Offset Count"
         }
 
@@ -117,8 +119,7 @@ SplitView {
             onTextChanged: {
                 let c = parseInt(text);
                 if (isNaN(c))
-                    return ;
-
+                    return;
                 algorithmView.offsetCount = c;
             }
 
@@ -126,7 +127,6 @@ SplitView {
                 bottom: 0
                 top: 1000
             }
-
         }
 
         CheckBox {
@@ -138,7 +138,5 @@ SplitView {
                 algorithmView.showVertexes = checked;
             }
         }
-
     }
-
 }

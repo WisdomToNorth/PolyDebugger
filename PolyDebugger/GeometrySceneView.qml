@@ -46,7 +46,6 @@ Rectangle {
                 var newZoom = m_zoom1 + dz;
                 if (newZoom <= m_max && newZoom >= m_min)
                     m_zoom2 = newZoom;
-
             }
 
             MouseArea {
@@ -57,35 +56,36 @@ Rectangle {
                 drag.target: plineSceneItem
                 drag.filterChildren: true
                 onWheel: {
-                    pinchArea.m_x1 = scaler.origin.x;
-                    pinchArea.m_y1 = scaler.origin.y;
-                    pinchArea.m_zoom1 = scaler.xScale;
-                    pinchArea.m_x2 = mouseX;
-                    pinchArea.m_y2 = mouseY;
-                    var newZoom;
-                    if (wheel.angleDelta.y > 0) {
-                        newZoom = pinchArea.m_zoom1 + 0.15;
-                        if (newZoom <= pinchArea.m_max)
-                            pinchArea.m_zoom2 = newZoom;
-                        else
-                            pinchArea.m_zoom2 = pinchArea.m_max;
-                    } else {
-                        newZoom = pinchArea.m_zoom1 - 0.15;
-                        if (newZoom >= pinchArea.m_min)
-                            pinchArea.m_zoom2 = newZoom;
-                        else
-                            pinchArea.m_zoom2 = pinchArea.m_min;
+                    function handleWheel(wheel) {
+                        pinchArea.m_x1 = scaler.origin.x;
+                        pinchArea.m_y1 = scaler.origin.y;
+                        pinchArea.m_zoom1 = scaler.xScale;
+                        pinchArea.m_x2 = mouseX;
+                        pinchArea.m_y2 = mouseY;
+                        var newZoom;
+                        if (wheel.angleDelta.y > 0) {
+                            newZoom = pinchArea.m_zoom1 + 0.15;
+                            if (newZoom <= pinchArea.m_max)
+                                pinchArea.m_zoom2 = newZoom;
+                            else
+                                pinchArea.m_zoom2 = pinchArea.m_max;
+                        } else {
+                            newZoom = pinchArea.m_zoom1 - 0.15;
+                            if (newZoom >= pinchArea.m_min)
+                                pinchArea.m_zoom2 = newZoom;
+                            else
+                                pinchArea.m_zoom2 = pinchArea.m_min;
+                        }
+                        plineSceneItem.x = plineSceneItem.x + (pinchArea.m_x1 - pinchArea.m_x2) * (1 - pinchArea.m_zoom1);
+                        plineSceneItem.y = plineSceneItem.y + (pinchArea.m_y1 - pinchArea.m_y2) * (1 - pinchArea.m_zoom1);
                     }
-                    plineSceneItem.x = plineSceneItem.x + (pinchArea.m_x1 - pinchArea.m_x2) * (1 - pinchArea.m_zoom1);
-                    plineSceneItem.y = plineSceneItem.y + (pinchArea.m_y1 - pinchArea.m_y2) * (1 - pinchArea.m_zoom1);
+                    handleWheel(wheel);
                 }
 
                 MouseArea {
                     anchors.fill: parent
                 }
-
             }
-
         }
 
         Rectangle {
@@ -114,7 +114,5 @@ Rectangle {
             xScale: pinchArea.m_zoom2
             yScale: pinchArea.m_zoom2
         }
-
     }
-
 }

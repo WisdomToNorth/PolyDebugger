@@ -3,12 +3,17 @@ import NgSettings 1.0
 import QtQuick 2.13
 import QtQuick.Controls 2.13
 import QtQuick.Layouts 1.13
+import QtQuick.Controls.Material 2.12
 
 SplitView {
-    // Other children of SplitView...
-
     id: settings
 
+    Material.theme: Material.Light
+    Material.accent: Material.Indigo
+    Material.primary: Material.Indigo
+    Material.elevation: 5
+    Material.background: Material.White
+    Material.foreground: Material.Black
     orientation: Qt.Horizontal
 
     Rectangle {
@@ -41,15 +46,11 @@ SplitView {
                     model: ["Calc", "NgPoly", "Slipper"]
                     currentIndex: 0
                 }
-
             }
 
             Item {
                 Layout.fillHeight: true
             }
-
         }
-
     }
-
 }

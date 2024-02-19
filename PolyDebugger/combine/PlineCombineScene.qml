@@ -3,9 +3,17 @@ import Polyline 1.0
 import QtQuick 2.13
 import QtQuick.Controls 2.13
 import QtQuick.Layouts 1.13
+import QtQuick.Controls.Material 2.12
 
 SplitView {
     id: splitView
+
+    Material.theme: Material.Light
+    Material.accent: Material.Indigo
+    Material.primary: Material.Indigo
+    Material.elevation: 5
+    Material.background: Material.White
+    Material.foreground: Material.Black
 
     orientation: Qt.Horizontal
 
@@ -18,7 +26,6 @@ SplitView {
             anchors.fill: parent
             plineCombineMode: combineModeComboBox.currentIndex
         }
-
     }
 
     ColumnLayout {
@@ -70,9 +77,7 @@ SplitView {
                         algorithmView.flipArgOrder = checked;
                     }
                 }
-
             }
-
         }
 
         GroupBox {
@@ -98,15 +103,11 @@ SplitView {
                     leftPadding: 6
                     text: "Winding Number: " + algorithmView.windingNumber
                 }
-
             }
-
         }
 
         Item {
             Layout.fillHeight: true
         }
-
     }
-
 }
