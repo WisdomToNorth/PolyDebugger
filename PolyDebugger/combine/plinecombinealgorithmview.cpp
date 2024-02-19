@@ -19,7 +19,7 @@ PlineCombineAlgorithmView::PlineCombineAlgorithmView(QQuickItem *parent) :
     GeometryCanvasItem(parent), m_polylineANode(nullptr), m_polylineBNode(nullptr),
     m_testPointNode(nullptr), m_intersectsNode(nullptr), m_dynamicPlinesParentNode(nullptr),
     m_windingNumber(0), m_vertexGrabbed(std::numeric_limits<std::size_t>::max()),
-    m_polylineGrabbed(nullptr), m_interacting(false), m_showIntersects(true),
+    polyline_grabbed_(nullptr), m_interacting(false), m_showIntersects(true),
     m_plineCombineMode(NoCombine), m_showVertexes(true), m_flipArgOrder(false),
     m_showWindingNumberPoint(false)
 {
@@ -318,38 +318,38 @@ QSGNode *PlineCombineAlgorithmView::updatePaintNode(QSGNode *oldNode,
 
 void PlineCombineAlgorithmView::mousePressEvent(QMouseEvent *event)
 {
-    m_globalMouseDownPoint = QPointF(event->globalX(), event->globalY());
-    m_vertexGrabbed = vertexUnderPosition(m_globalMouseDownPoint, m_plineA);
+    mouse_pick_pt_ = QPointF(event->globalX(), event->globalY());
+    // m_vertexGrabbed = vertexUnderPosition(mouse_pick_pt_, m_plineA);
 
-    if (isVertexGrabbed())
-    {
-        m_polylineGrabbed = &m_plineA;
-        m_origVertexGlobalPos = convertToGlobalUICoord(m_plineA[m_vertexGrabbed].pos());
-    }
-    else
-    {
-        m_vertexGrabbed = vertexUnderPosition(m_globalMouseDownPoint, m_plineB);
-        if (isVertexGrabbed())
-        {
-            m_polylineGrabbed = &m_plineB;
-            m_origVertexGlobalPos = convertToGlobalUICoord(m_plineB[m_vertexGrabbed].pos());
-        }
-        else
-        {
-            m_vertexGrabbed = vertexUnderPosition(m_globalMouseDownPoint, m_testPoint);
-            if (!isVertexGrabbed())
-            {
-                event->ignore();
-                m_polylineGrabbed = nullptr;
-                return;
-            }
+    // if (isVertexGrabbed())
+    // {
+    //     polyline_grabbed_ = &m_plineA;
+    //     m_origVertexGlobalPos = convertToGlobalUICoord(m_plineA[m_vertexGrabbed].pos());
+    // }
+    // else
+    // {
+    //     m_vertexGrabbed = vertexUnderPosition(mouse_pick_pt_, m_plineB);
+    //     if (isVertexGrabbed())
+    //     {
+    //         polyline_grabbed_ = &m_plineB;
+    //         m_origVertexGlobalPos = convertToGlobalUICoord(m_plineB[m_vertexGrabbed].pos());
+    //     }
+    //     else
+    //     {
+    //         m_vertexGrabbed = vertexUnderPosition(mouse_pick_pt_, m_testPoint);
+    //         if (!isVertexGrabbed())
+    //         {
+    //             event->ignore();
+    //             polyline_grabbed_ = nullptr;
+    //             return;
+    //         }
 
-            m_polylineGrabbed = &m_testPoint;
-            m_origVertexGlobalPos = convertToGlobalUICoord(m_testPoint[m_vertexGrabbed].pos());
-        }
-    }
+    //         polyline_grabbed_ = &m_testPoint;
+    //         m_origVertexGlobalPos = convertToGlobalUICoord(m_testPoint[m_vertexGrabbed].pos());
+    //     }
+    // }
 
-    setInteracting(true);
+    // setInteracting(true);
     event->accept();
 }
 
@@ -361,22 +361,22 @@ void PlineCombineAlgorithmView::mouseMoveEvent(QMouseEvent *event)
     }
 
     // convert back from global coordinates to get real delta
-    QPointF mouseDelta = QPointF(event->globalX(), event->globalY()) - m_globalMouseDownPoint;
+    QPointF mouseDelta = QPointF(event->globalX(), event->globalY()) - mouse_pick_pt_;
     QPointF newGlobalVertexPos = mouseDelta + m_origVertexGlobalPos;
     QPointF newLocalVertexPos = mapFromGlobal(newGlobalVertexPos);
     QPointF newRealVertexPos = m_uiToRealCoord * newLocalVertexPos;
 
-    if (m_polylineGrabbed == &m_plineA)
+    if (polyline_grabbed_ == &m_plineA)
     {
         m_plineA[m_vertexGrabbed].x() = newRealVertexPos.x();
         m_plineA[m_vertexGrabbed].y() = newRealVertexPos.y();
     }
-    else if (m_polylineGrabbed == &m_plineB)
+    else if (polyline_grabbed_ == &m_plineB)
     {
         m_plineB[m_vertexGrabbed].x() = newRealVertexPos.x();
         m_plineB[m_vertexGrabbed].y() = newRealVertexPos.y();
     }
-    else if (m_polylineGrabbed == &m_testPoint)
+    else if (polyline_grabbed_ == &m_testPoint)
     {
         m_testPoint[m_vertexGrabbed].x() = newRealVertexPos.x();
         m_testPoint[m_vertexGrabbed].y() = newRealVertexPos.y();

@@ -43,10 +43,17 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
-    std::vector<cavc::Polyline<double>> m_ccwLoops;
-    std::vector<cavc::Polyline<double>> m_cwLoops;
-    cavc::Polyline<double> *m_polylineGrabbed;
-    void buildCavcData();
+    typedef std::vector<std::tuple<double, double, double>> PolygonLoop;
+    std::vector<std::pair<PolygonLoop, bool>> cases_data_;
+    void createCaseData();
+
+    std::vector<std::pair<cavc::Polyline<double>, bool>> calc_loops_;
+    // std::vector<cavc::Polyline<double>> m_cwLoops;
+    cavc::Polyline<double> *polyline_grabbed_;
+
+    void buildCavcCase();
+    static cavc::Polyline<double>
+    buildCavcData(const std::vector<std::tuple<double, double, double>> &data, bool is_hole);
 
 private:
     QSGOpacityNode *m_dynamicPlinesParentNode;
@@ -55,7 +62,11 @@ private:
     int m_offsetCount;
 
     bool isVertexGrabbed();
-    QPointF m_globalMouseDownPoint;
+    void resetVertexGrabbed();
+
+    QPointF mouse_pick_pt_;
+    std::pair<int, int> vertex_pick_index_;
+
     std::size_t m_vertexGrabbed;
     QPointF m_origVertexGlobalPos;
 };

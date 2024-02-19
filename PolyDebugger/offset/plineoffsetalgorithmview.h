@@ -142,7 +142,7 @@ private:
 
     // members for interaction
     bool isVertexGrabbed();
-    QPointF m_globalMouseDownPoint;
+    QPointF mouse_pick_pt_;
     std::size_t m_vertexGrabbed;
     QPointF m_origVertexGlobalPos;
     bool m_interacting;

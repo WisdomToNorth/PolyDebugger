@@ -15,6 +15,8 @@ class GeometryCanvasItem : public QQuickItem
     Q_OBJECT
 public:
     explicit GeometryCanvasItem(QQuickItem *parent = nullptr);
+    QPointF convertToGlobalUICoord(const QPointF &pt);
+    // QPointF convertToLocalCoord(const QPointF &pt);
 
 protected:
     // members for mapping "real" coordinates to UI coordinates
@@ -31,7 +33,7 @@ protected:
 
     QPointF convertToGlobalUICoord(const cavc::Vector2<double> &pt);
 
-protected:
+private:
     std::size_t vertexUnderPosition(QPointF uiGlobalPos, const cavc::Polyline<double> &pline);
     std::size_t vertexUnderPosition(QPointF uiGlobalPos, const NGPolygonSet &polygonSet);
 };

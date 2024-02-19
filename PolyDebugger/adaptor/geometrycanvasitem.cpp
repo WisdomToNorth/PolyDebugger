@@ -42,6 +42,16 @@ QPointF GeometryCanvasItem::convertToGlobalUICoord(const cavc::Vector2<double> &
     return mapToGlobal(m_realToUICoord * QPointF(pt.x(), pt.y()));
 }
 
+QPointF GeometryCanvasItem::convertToGlobalUICoord(const QPointF &pt)
+{
+    return mapToGlobal(m_realToUICoord * pt);
+}
+
+// QPointF GeometryCanvasItem::convertToLocalCoord(const QPointF &pt)
+// {
+//     return m_realToUICoord.inverted() * mapFromGlobal(pt);
+// }
+
 std::size_t GeometryCanvasItem::vertexUnderPosition(QPointF uiGlobalPos,
                                                     const Polyline<double> &pline)
 {

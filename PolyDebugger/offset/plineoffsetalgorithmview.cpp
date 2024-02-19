@@ -23,7 +23,7 @@ PlineOffsetAlgorithmView::PlineOffsetAlgorithmView(QQuickItem *parent) :
     m_dualRawOffsetPolylineNode(nullptr), m_untrimmedSegmentsParentNode(nullptr),
     m_selfIntersectsNode(nullptr), m_boundingBoxesNode(nullptr), m_slicesParentNode(nullptr),
     m_repeatOffsetsParentNode(nullptr), m_endPointIntersectCirclesNode(nullptr),
-    m_arcApproxError(0.005), m_globalMouseDownPoint(),
+    m_arcApproxError(0.005), mouse_pick_pt_(),
     m_vertexGrabbed(std::numeric_limits<std::size_t>::max()), m_interacting(false),
     m_showOrigPlineVertexes(true), m_showRawOffsetSegments(false), m_showRawOffsetPolyline(false),
     m_showRawOffsetPlineVertexes(false), m_plineOffset(0.5), m_offsetCount(0),
@@ -681,20 +681,20 @@ void PlineOffsetAlgorithmView::mousePressEvent(QMouseEvent *event)
         event->ignore();
         return;
     }
-    // converting to global coordinates to get screen resolution delta even if current scale != 1
-    m_globalMouseDownPoint = QPointF(event->globalX(), event->globalY());
+    // // converting to global coordinates to get screen resolution delta even if current scale != 1
+    // mouse_pick_pt_ = QPointF(event->globalX(), event->globalY());
 
-    m_vertexGrabbed = vertexUnderPosition(m_globalMouseDownPoint, input_polyline_);
-    if (!isVertexGrabbed())
-    {
-        event->ignore();
-        return;
-    }
+    // m_vertexGrabbed = vertexUnderPosition(mouse_pick_pt_, input_polyline_);
+    // if (!isVertexGrabbed())
+    // {
+    //     event->ignore();
+    //     return;
+    // }
 
-    m_origVertexGlobalPos = convertToGlobalUICoord(input_polyline_[m_vertexGrabbed].pos());
+    // m_origVertexGlobalPos = convertToGlobalUICoord(input_polyline_[m_vertexGrabbed].pos());
 
-    setInteracting(true);
-    event->accept();
+    // setInteracting(true);
+    // event->accept();
 }
 
 void PlineOffsetAlgorithmView::mouseMoveEvent(QMouseEvent *event)
@@ -705,7 +705,7 @@ void PlineOffsetAlgorithmView::mouseMoveEvent(QMouseEvent *event)
     }
 
     // convert back from global coordinates to get real delta
-    QPointF mouseDelta = QPointF(event->globalX(), event->globalY()) - m_globalMouseDownPoint;
+    QPointF mouseDelta = QPointF(event->globalX(), event->globalY()) - mouse_pick_pt_;
     QPointF newGlobalVertexPos = mouseDelta + m_origVertexGlobalPos;
     QPointF newLocalVertexPos = mapFromGlobal(newGlobalVertexPos);
     QPointF newRealVertexPos = m_uiToRealCoord * newLocalVertexPos;

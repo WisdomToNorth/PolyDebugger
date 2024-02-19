@@ -78,7 +78,7 @@ private:
     cavc::Polyline<double> m_plineA;
     cavc::Polyline<double> m_plineB;
     cavc::Polyline<double> m_testPoint;
-    cavc::Polyline<double> *m_polylineGrabbed;
+    cavc::Polyline<double> *polyline_grabbed_;
 
 private:
     NgViewModel *m_polylineANode;
@@ -92,7 +92,7 @@ private:
     int m_windingNumber;
 
     bool isVertexGrabbed();
-    QPointF m_globalMouseDownPoint;
+    QPointF mouse_pick_pt_;
     std::size_t m_vertexGrabbed;
     QPointF m_origVertexGlobalPos;
     bool m_interacting;
