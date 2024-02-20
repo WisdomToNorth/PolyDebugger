@@ -57,6 +57,11 @@ add_executable(PolyGui
     adaptor/viewmodel.h
     adaptor/viewmodel.cpp
 
+    casedata.cpp
+    casedata.h
+    datamanager.h
+    datamanager.cpp
+
     flatcolorgeometrynode.cpp
     flatcolorgeometrynode.h
     graphicshelpers.cpp

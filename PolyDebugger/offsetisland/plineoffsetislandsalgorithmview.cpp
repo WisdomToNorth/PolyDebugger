@@ -6,6 +6,7 @@
 
 // #include "adaptor/polylinenode.h"
 #include "adaptor/viewmodel.h"
+#include "datamanager.h"
 #include "settings/settings.h"
 
 using namespace cavc;
@@ -15,18 +16,44 @@ PlineOffsetIslandsAlgorithmView::PlineOffsetIslandsAlgorithmView(QQuickItem *par
     GeometryCanvasItem(parent), m_showVertexes(true), m_offsetDelta(1), m_offsetCount(20),
     m_vertexGrabbed(std::numeric_limits<std::size_t>::max())
 {
-    createCaseData();
+    auto &docData = DocumetData::getInstance();
+    docData.changeData("default1");
 
     auto machine_type = NgSettings::AppAlgorithmCore();
     std::cout << "type in offset class: " << static_cast<int>(machine_type) << std::endl;
     switch (machine_type)
     {
-    case NgSettings::AppAlgorithmCore::kCavc: buildCavcCase(); break;
+    case NgSettings::AppAlgorithmCore::kCavc:
+    {
+        DataUtils::buildCavcCase(docData.case_data_, cavc_polygonset_);
+        break;
+    }
     case NgSettings::AppAlgorithmCore::kNGPoly: break;
     case NgSettings::AppAlgorithmCore::kClipper: break;
 
     default: break;
     }
+}
+
+QString PlineOffsetIslandsAlgorithmView::caseIndex() const
+{
+    return DocumetData::getInstance().case_index_;
+}
+
+void PlineOffsetIslandsAlgorithmView::setCaseIndex(QString caseindex)
+{
+    std::cout << "caseindex: " << caseindex.toStdString() << std::endl;
+    if (caseindex == DocumetData::getInstance().case_index_)
+    {
+        return;
+    }
+    std::cout << "change case data" << std::endl;
+
+    DocumetData::getInstance().changeData(caseindex);
+    DataUtils::buildCavcCase(DocumetData::getInstance().case_data_, cavc_polygonset_);
+
+    emit changeCaseDataSignal(caseindex);
+    update();
 }
 
 bool PlineOffsetIslandsAlgorithmView::showVertexes() const
@@ -112,7 +139,7 @@ QSGNode *PlineOffsetIslandsAlgorithmView::updatePaintNode(QSGNode *oldNode,
         plineNode = static_cast<NgViewModel *>(plineNode->nextSibling());
     };
 
-    for (const auto &[data, is_hole] : calc_loops_)
+    for (const auto &[data, is_hole] : cavc_polygonset_)
     {
         if (is_hole)
         {
@@ -128,7 +155,7 @@ QSGNode *PlineOffsetIslandsAlgorithmView::updatePaintNode(QSGNode *oldNode,
     {
         ParallelOffsetIslands<double> alg;
         OffsetLoopSet<double> loopSet;
-        for (const auto &[data, is_hole] : calc_loops_)
+        for (const auto &[data, is_hole] : cavc_polygonset_)
         {
             if (is_hole)
             {
@@ -173,10 +200,12 @@ void PlineOffsetIslandsAlgorithmView::mousePressEvent(QMouseEvent *event)
 {
     mouse_pick_pt_ = QPointF(event->globalX(), event->globalY());
 
-    // find if pick to point in cases_data_, record to vertex_pick_index_. if not find, put {-1, -1}
-    for (int i = 0; i < cases_data_.size(); i++)
+    auto &case_data = DocumetData::getInstance().case_data_;
+
+    // find if pick to point in case_data_, record to vertex_pick_index_. if not find, put {-1, -1}
+    for (int i = 0; i < case_data.size(); i++)
     {
-        auto const &data = cases_data_[i].first;
+        auto const &data = case_data[i].first;
         for (int j = 0; j < data.size(); j++)
         {
             QPointF vPosInGlobal =
@@ -193,7 +222,6 @@ void PlineOffsetIslandsAlgorithmView::mousePressEvent(QMouseEvent *event)
     if (!isVertexGrabbed())
     {
         event->ignore();
-
         return;
     }
 
@@ -214,7 +242,7 @@ void PlineOffsetIslandsAlgorithmView::mouseMoveEvent(QMouseEvent *event)
 
     int pline_index = vertex_pick_index_.first;
     int vertex_index = vertex_pick_index_.second;
-    auto &case_changed = cases_data_[pline_index].first[vertex_index];
+    auto &case_changed = DocumetData::getInstance().case_data_[pline_index].first[vertex_index];
 
     std::get<0>(case_changed) = newRealVertexPos.x();
     std::get<1>(case_changed) = newRealVertexPos.y();
@@ -224,12 +252,14 @@ void PlineOffsetIslandsAlgorithmView::mouseMoveEvent(QMouseEvent *event)
     case NgSettings::AppAlgorithmCore::kCavc:
     {
         ////way 1:  regenerate cavc data
-        calc_loops_[pline_index] = {
-            buildCavcData(cases_data_[pline_index].first, cases_data_[pline_index].second),
-            cases_data_[pline_index].second};
+        IsHole is_hole = DocumetData::getInstance().case_data_[pline_index].second;
+        cavc_polygonset_[pline_index] = {
+            DataUtils::buildCavcPline(DocumetData::getInstance().case_data_[pline_index].first,
+                                      is_hole),
+            is_hole};
 
         ////way 2:  update polyline, more efficient, not able to work well if index is 0 or n-1
-        // auto &vertex = calc_loops_[pline_index].first[vertex_index];
+        // auto &vertex = cavc_polygonset_[pline_index].first[vertex_index];
         // vertex.x() = newRealVertexPos.x();
         // vertex.y() = newRealVertexPos.y();
         break;
@@ -267,72 +297,4 @@ void PlineOffsetIslandsAlgorithmView::resetVertexGrabbed()
     vertex_pick_index_ = std::make_pair(-1, -1);
 }
 
-cavc::Polyline<double> PlineOffsetIslandsAlgorithmView::buildCavcData(
-    const std::vector<std::tuple<double, double, double>> &data, bool is_hole)
-{
-    cavc::Polyline<double> pline;
-    for (auto const &pt : data)
-    {
-        pline.addVertex(std::get<0>(pt), std::get<1>(pt), std::get<2>(pt));
-    }
-    pline.isClosed() = true;
-    if (is_hole)
-    {
-        invertDirection(pline);
-    }
-    return pline;
-}
-
-void PlineOffsetIslandsAlgorithmView::createCaseData()
-{
-    std::vector<std::pair<PolygonLoop, bool>> case_data;
-
-    /*outboundry*/
-    auto radius = 40;
-    auto centerX = 0;
-    auto centerY = 0;
-    std::size_t segmentCount = 16;
-    std::vector<std::tuple<double, double, double>> data1;
-    for (std::size_t i = 0; i < segmentCount; ++i)
-    {
-        double angle = static_cast<double>(i) * utils::tau<double>() / segmentCount;
-        data1.push_back(std::make_tuple(radius * std::cos(angle) + centerX,
-                                        radius * std::sin(angle) + centerY, i % 2 == 0 ? 1 : -1));
-    }
-    /*hole*/
-    std::vector<std::tuple<double, double, double>> data2{
-        std::make_tuple(-7, -25, 0), std::make_tuple(-4, -25, 0), std::make_tuple(-4, -15, 0),
-        std::make_tuple(-7, -15, 0)};
-
-    /*hole*/
-    std::vector<std::tuple<double, double, double>> data3{std::make_tuple(22, -20, 1),
-                                                          std::make_tuple(27, -20, 1)};
-    /*hole*/
-    std::vector<std::tuple<double, double, double>> data4{std::make_tuple(0, 25, 1),
-                                                          std::make_tuple(-4, 0, 0),
-                                                          std::make_tuple(2, 0, 1),
-                                                          std::make_tuple(10, 0, -0.5),
-                                                          std::make_tuple(8, 9, 0.374794619217547),
-                                                          std::make_tuple(21, 0, 0),
-                                                          std::make_tuple(23, 0, 1),
-                                                          std::make_tuple(32, 0, -0.5),
-                                                          std::make_tuple(28, 0, 0.5),
-                                                          std::make_tuple(28, 12, 0.5)};
-
-    case_data.push_back(std::make_pair(data1, false));
-    case_data.push_back(std::make_pair(data2, true));
-    case_data.push_back(std::make_pair(data3, true));
-    case_data.push_back(std::make_pair(data4, true));
-    cases_data_.swap(case_data);
-}
-
-void PlineOffsetIslandsAlgorithmView::buildCavcCase()
-{
-    calc_loops_.clear();
-    for (auto const &data : cases_data_)
-    {
-        cavc::Polyline<double> pline = buildCavcData(data.first, data.second);
-        calc_loops_.push_back({std::move(pline), data.second});
-    }
-}
 } // namespace debugger

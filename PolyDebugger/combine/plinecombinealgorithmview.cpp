@@ -350,6 +350,13 @@ void PlineCombineAlgorithmView::mousePressEvent(QMouseEvent *event)
     // }
 
     // setInteracting(true);
+
+    if (!isVertexGrabbed())
+    {
+        event->ignore();
+        return;
+    }
+
     event->accept();
 }
 

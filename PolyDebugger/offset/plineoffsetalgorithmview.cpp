@@ -685,16 +685,18 @@ void PlineOffsetAlgorithmView::mousePressEvent(QMouseEvent *event)
     // mouse_pick_pt_ = QPointF(event->globalX(), event->globalY());
 
     // m_vertexGrabbed = vertexUnderPosition(mouse_pick_pt_, input_polyline_);
-    // if (!isVertexGrabbed())
-    // {
-    //     event->ignore();
-    //     return;
-    // }
 
     // m_origVertexGlobalPos = convertToGlobalUICoord(input_polyline_[m_vertexGrabbed].pos());
 
     // setInteracting(true);
-    // event->accept();
+
+    if (!isVertexGrabbed())
+    {
+        event->ignore();
+        return;
+    }
+
+    event->accept();
 }
 
 void PlineOffsetAlgorithmView::mouseMoveEvent(QMouseEvent *event)

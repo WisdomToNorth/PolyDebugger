@@ -6,6 +6,7 @@
 #include "cavc/polyline.hpp"
 
 #include "adaptor/geometrycanvasitem.h"
+#include "casedata.h"
 
 class QSGOpacityNode;
 namespace debugger
@@ -16,6 +17,8 @@ class PlineOffsetIslandsAlgorithmView : public GeometryCanvasItem
     Q_PROPERTY(bool showVertexes READ showVertexes WRITE setShowVertexes NOTIFY showVertexesChanged)
     Q_PROPERTY(double offsetDelta READ offsetDelta WRITE setOffsetDelta NOTIFY offsetDeltaChanged)
     Q_PROPERTY(int offsetCount READ offsetCount WRITE setOffsetCount NOTIFY offsetCountChanged)
+    Q_PROPERTY(QString caseIndex READ caseIndex WRITE setCaseIndex NOTIFY changeCaseDataSignal)
+
 public:
     explicit PlineOffsetIslandsAlgorithmView(QQuickItem *parent = nullptr);
 
@@ -28,10 +31,14 @@ public:
     int offsetCount() const;
     void setOffsetCount(int offsetCount);
 
+    QString caseIndex() const;
+    void setCaseIndex(QString caseindex);
+
 signals:
     void showVertexesChanged(bool showVertexes);
     void offsetDeltaChanged(double offsetDelta);
     void offsetCountChanged(int offsetCount);
+    void changeCaseDataSignal(QString caseindex);
 
 protected:
     /*Cavc*/
@@ -43,17 +50,9 @@ protected:
     void mouseReleaseEvent(QMouseEvent *event) override;
 
 private:
-    typedef std::vector<std::tuple<double, double, double>> PolygonLoop;
-    std::vector<std::pair<PolygonLoop, bool>> cases_data_;
-    void createCaseData();
+    // CaseData case_data_;
 
-    std::vector<std::pair<cavc::Polyline<double>, bool>> calc_loops_;
-    // std::vector<cavc::Polyline<double>> m_cwLoops;
-    cavc::Polyline<double> *polyline_grabbed_;
-
-    void buildCavcCase();
-    static cavc::Polyline<double>
-    buildCavcData(const std::vector<std::tuple<double, double, double>> &data, bool is_hole);
+    CavcPolygonSet cavc_polygonset_;
 
 private:
     QSGOpacityNode *m_dynamicPlinesParentNode;
