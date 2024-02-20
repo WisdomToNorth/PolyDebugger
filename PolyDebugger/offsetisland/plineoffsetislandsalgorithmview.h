@@ -11,7 +11,7 @@
 class QSGOpacityNode;
 namespace debugger
 {
-class PlineOffsetIslandsAlgorithmView : public GeometryCanvasItem
+class OffsetIslandsView : public GeometryCanvasItem
 {
     Q_OBJECT
     Q_PROPERTY(bool showVertexes READ showVertexes WRITE setShowVertexes NOTIFY showVertexesChanged)
@@ -20,7 +20,7 @@ class PlineOffsetIslandsAlgorithmView : public GeometryCanvasItem
     Q_PROPERTY(QString caseIndex READ caseIndex WRITE setCaseIndex NOTIFY changeCaseDataSignal)
 
 public:
-    explicit PlineOffsetIslandsAlgorithmView(QQuickItem *parent = nullptr);
+    explicit OffsetIslandsView(QQuickItem *parent = nullptr);
 
     bool showVertexes() const;
     void setShowVertexes(bool showVertexes);
@@ -64,7 +64,7 @@ private:
     void resetVertexGrabbed();
 
     QPointF mouse_pick_pt_;
-    std::pair<int, int> vertex_pick_index_;
+    std::pair<int, int> vertex_pick_index_{-1, -1};
 
     std::size_t m_vertexGrabbed;
     QPointF m_origVertexGlobalPos;

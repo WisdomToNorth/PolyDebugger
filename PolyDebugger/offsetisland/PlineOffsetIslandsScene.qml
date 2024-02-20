@@ -20,7 +20,7 @@ SplitView {
     GeometrySceneView {
         implicitWidth: splitViewHorizontal.width * 0.8 // 80% of the SplitView's width
 
-        PlineOffsetIslandsAlgorithmView {
+        OffsetIslandsView {
             id: algorithmView
 
             anchors.fill: parent

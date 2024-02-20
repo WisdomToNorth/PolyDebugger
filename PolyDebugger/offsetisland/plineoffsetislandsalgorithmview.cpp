@@ -12,7 +12,7 @@
 using namespace cavc;
 namespace debugger
 {
-PlineOffsetIslandsAlgorithmView::PlineOffsetIslandsAlgorithmView(QQuickItem *parent) :
+OffsetIslandsView::OffsetIslandsView(QQuickItem *parent) :
     GeometryCanvasItem(parent), m_showVertexes(true), m_offsetDelta(1), m_offsetCount(20),
     m_vertexGrabbed(std::numeric_limits<std::size_t>::max())
 {
@@ -35,12 +35,12 @@ PlineOffsetIslandsAlgorithmView::PlineOffsetIslandsAlgorithmView(QQuickItem *par
     }
 }
 
-QString PlineOffsetIslandsAlgorithmView::caseIndex() const
+QString OffsetIslandsView::caseIndex() const
 {
     return DocumetData::getInstance().case_index_;
 }
 
-void PlineOffsetIslandsAlgorithmView::setCaseIndex(QString caseindex)
+void OffsetIslandsView::setCaseIndex(QString caseindex)
 {
     std::cout << "caseindex: " << caseindex.toStdString() << std::endl;
     if (caseindex == DocumetData::getInstance().case_index_)
@@ -56,12 +56,12 @@ void PlineOffsetIslandsAlgorithmView::setCaseIndex(QString caseindex)
     update();
 }
 
-bool PlineOffsetIslandsAlgorithmView::showVertexes() const
+bool OffsetIslandsView::showVertexes() const
 {
     return m_showVertexes;
 }
 
-void PlineOffsetIslandsAlgorithmView::setShowVertexes(bool showVertexes)
+void OffsetIslandsView::setShowVertexes(bool showVertexes)
 {
     if (m_showVertexes == showVertexes)
         return;
@@ -71,12 +71,12 @@ void PlineOffsetIslandsAlgorithmView::setShowVertexes(bool showVertexes)
     emit showVertexesChanged(m_showVertexes);
 }
 
-double PlineOffsetIslandsAlgorithmView::offsetDelta() const
+double OffsetIslandsView::offsetDelta() const
 {
     return m_offsetDelta;
 }
 
-void PlineOffsetIslandsAlgorithmView::setOffsetDelta(double offsetDelta)
+void OffsetIslandsView::setOffsetDelta(double offsetDelta)
 {
     if (qFuzzyCompare(m_offsetDelta, offsetDelta))
     {
@@ -88,12 +88,12 @@ void PlineOffsetIslandsAlgorithmView::setOffsetDelta(double offsetDelta)
     emit offsetDeltaChanged(m_offsetDelta);
 }
 
-int PlineOffsetIslandsAlgorithmView::offsetCount() const
+int OffsetIslandsView::offsetCount() const
 {
     return m_offsetCount;
 }
 
-void PlineOffsetIslandsAlgorithmView::setOffsetCount(int offsetCount)
+void OffsetIslandsView::setOffsetCount(int offsetCount)
 {
     if (m_offsetCount == offsetCount)
         return;
@@ -103,8 +103,7 @@ void PlineOffsetIslandsAlgorithmView::setOffsetCount(int offsetCount)
     emit offsetCountChanged(m_offsetCount);
 }
 
-QSGNode *PlineOffsetIslandsAlgorithmView::updatePaintNode(QSGNode *oldNode,
-                                                          QQuickItem::UpdatePaintNodeData *)
+QSGNode *OffsetIslandsView::updatePaintNode(QSGNode *oldNode, QQuickItem::UpdatePaintNodeData *)
 {
     QSGTransformNode *rootNode = nullptr;
     if (!oldNode)
@@ -196,7 +195,7 @@ QSGNode *PlineOffsetIslandsAlgorithmView::updatePaintNode(QSGNode *oldNode,
     return rootNode;
 }
 
-void PlineOffsetIslandsAlgorithmView::mousePressEvent(QMouseEvent *event)
+void OffsetIslandsView::mousePressEvent(QMouseEvent *event)
 {
     mouse_pick_pt_ = QPointF(event->globalX(), event->globalY());
 
@@ -228,7 +227,7 @@ void PlineOffsetIslandsAlgorithmView::mousePressEvent(QMouseEvent *event)
     event->accept();
 }
 
-void PlineOffsetIslandsAlgorithmView::mouseMoveEvent(QMouseEvent *event)
+void OffsetIslandsView::mouseMoveEvent(QMouseEvent *event)
 {
     if (!isVertexGrabbed())
     {
@@ -273,7 +272,7 @@ void PlineOffsetIslandsAlgorithmView::mouseMoveEvent(QMouseEvent *event)
     update();
 }
 
-void PlineOffsetIslandsAlgorithmView::mouseReleaseEvent(QMouseEvent *event)
+void OffsetIslandsView::mouseReleaseEvent(QMouseEvent *event)
 {
     if (!isVertexGrabbed())
     {
@@ -287,12 +286,12 @@ void PlineOffsetIslandsAlgorithmView::mouseReleaseEvent(QMouseEvent *event)
     }
 }
 
-bool PlineOffsetIslandsAlgorithmView::isVertexGrabbed()
+bool OffsetIslandsView::isVertexGrabbed()
 {
     return vertex_pick_index_.first != -1 && vertex_pick_index_.second != -1;
 }
 
-void PlineOffsetIslandsAlgorithmView::resetVertexGrabbed()
+void OffsetIslandsView::resetVertexGrabbed()
 {
     vertex_pick_index_ = std::make_pair(-1, -1);
 }

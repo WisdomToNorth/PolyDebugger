@@ -16,8 +16,7 @@ int main(int argc, char *argv[])
 
     qmlRegisterType<PlineCombineAlgorithmView>("Polyline", 1, 0, "PlineCombineAlgorithmView");
 
-    qmlRegisterType<PlineOffsetIslandsAlgorithmView>("Polyline", 1, 0,
-                                                     "PlineOffsetIslandsAlgorithmView");
+    qmlRegisterType<OffsetIslandsView>("Polyline", 1, 0, "OffsetIslandsView");
 
     qmlRegisterType<PlineOffsetAlgorithmView>("Polyline", 1, 0, "PlineOffsetAlgorithmView");
 
