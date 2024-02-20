@@ -2,19 +2,18 @@ import ".."
 import Polyline 1.0
 import QtQuick 2.13
 import QtQuick.Controls 2.13
-import QtQuick.Layouts 1.13
 import QtQuick.Controls.Material 2.12
+import QtQuick.Layouts 1.13
 
 SplitView {
     id: splitView
 
     Material.theme: Material.Light
-    Material.accent: Material.Indigo
+    Material.accent: Material.Blue
     Material.primary: Material.Indigo
     Material.elevation: 5
     Material.background: Material.White
     Material.foreground: Material.Black
-
     orientation: Qt.Horizontal
 
     GeometrySceneView {
@@ -26,6 +25,7 @@ SplitView {
             anchors.fill: parent
             plineCombineMode: combineModeComboBox.currentIndex
         }
+
     }
 
     ColumnLayout {
@@ -55,7 +55,7 @@ SplitView {
         GroupBox {
             title: "Combine Mode"
             leftInset: 5
-            rightInset: 5
+            rightInset: 15
             implicitWidth: parent.width
 
             ColumnLayout {
@@ -66,7 +66,7 @@ SplitView {
 
                     implicitWidth: parent.width
                     leftInset: 5
-                    rightInset: 5
+                    rightInset: 15
                     model: ["None", "Union", "Exclude", "Intersect", "XOR", "Coincident Slices"]
                 }
 
@@ -77,13 +77,15 @@ SplitView {
                         algorithmView.flipArgOrder = checked;
                     }
                 }
+
             }
+
         }
 
         GroupBox {
             title: "Winding Number"
             leftInset: 5
-            rightInset: 5
+            rightInset: 15
             implicitWidth: parent.width
 
             ColumnLayout {
@@ -103,11 +105,15 @@ SplitView {
                     leftPadding: 6
                     text: "Winding Number: " + algorithmView.windingNumber
                 }
+
             }
+
         }
 
         Item {
             Layout.fillHeight: true
         }
+
     }
+
 }

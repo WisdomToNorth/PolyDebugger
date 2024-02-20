@@ -2,8 +2,8 @@ import ".."
 import Polyline 1.0
 import QtQuick 2.13
 import QtQuick.Controls 2.13
-import QtQuick.Layouts 1.13
 import QtQuick.Controls.Material 2.12
+import QtQuick.Layouts 1.13
 
 SplitView {
     id: offsetsplitview
@@ -26,6 +26,7 @@ SplitView {
             selfIntersectsTarget: selfIntersectsTargetComboBox.currentIndex
             finishedPolyline: finishedPlinesComboBox.currentIndex
         }
+
     }
 
     ScrollView {
@@ -55,7 +56,7 @@ SplitView {
 
                 title: "Offset"
                 leftInset: 5
-                rightInset: 5
+                rightInset: 15
                 implicitWidth: first_clayout.width
 
                 ColumnLayout {
@@ -81,12 +82,14 @@ SplitView {
                                 let f = parseFloat(text);
                                 if (!isNaN(f))
                                     offsetSlider.value = f;
+
                             }
 
                             validator: DoubleValidator {
                                 bottom: offsetSlider.from
                                 top: offsetSlider.to
                             }
+
                         }
 
                         Slider {
@@ -117,10 +120,12 @@ SplitView {
                             anchors.top: offsetSlider.bottom
                             text: offsetSlider.to
                         }
+
                     }
 
                     CheckBox {
                         id: showLastPrunedRawOffsetsCheckBox
+
                         width: parent.width - 25
                         text: "Show Last Pruned Raw Offsets"
                         checked: algorithmView.showLastPrunedRawOffsets
@@ -140,14 +145,18 @@ SplitView {
                             let c = parseInt(text);
                             if (!isNaN(c))
                                 algorithmView.offsetCount = c;
+
                         }
 
                         validator: IntValidator {
                             bottom: 0
                             top: 1000
                         }
+
                     }
+
                 }
+
             }
 
             CheckBox {
@@ -162,7 +171,7 @@ SplitView {
             GroupBox {
                 title: "Raw Offsets"
                 leftInset: 5
-                rightInset: 5
+                rightInset: 15
                 implicitWidth: first_clayout.width
 
                 ColumnLayout {
@@ -203,13 +212,15 @@ SplitView {
                             algorithmView.showRawOffsetSegments = checked;
                         }
                     }
+
                 }
+
             }
 
             GroupBox {
                 title: "Self Intersects"
                 leftInset: 5
-                rightInset: 5
+                rightInset: 15
                 implicitWidth: first_clayout.width
 
                 ComboBox {
@@ -217,15 +228,16 @@ SplitView {
 
                     width: parent.width
                     leftInset: 5
-                    rightInset: 5
+                    rightInset: 15
                     model: ["None", "Original Polyline", "Raw Offset Polyline"]
                 }
+
             }
 
             GroupBox {
                 title: "Finished Polylines"
                 leftInset: 5
-                rightInset: 5
+                rightInset: 15
                 implicitWidth: first_clayout.width
 
                 ComboBox {
@@ -233,25 +245,27 @@ SplitView {
 
                     width: parent.width
                     leftInset: 5
-                    rightInset: 5
+                    rightInset: 15
                     model: ["None", "Slices", "DualSlices", "Joined"]
                 }
+
             }
 
             GroupBox {
                 title: "Spatial Index"
                 leftInset: 5
-                rightInset: 5
+                rightInset: 15
                 implicitWidth: first_clayout.width
 
                 ComboBox {
                     id: spatialIndexTargetComboBox
 
                     leftInset: 5
-                    rightInset: 5
+                    rightInset: 15
                     width: parent.width
                     model: ["None", "Original Polyline", "Raw Offset Polyline"]
                 }
+
             }
 
             CheckBox {
@@ -264,6 +278,9 @@ SplitView {
                     algorithmView.showEndPointIntersectCircles = checked;
                 }
             }
+
         }
+
     }
+
 }

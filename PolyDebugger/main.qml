@@ -1,27 +1,26 @@
 import QtQuick 2.13
 import QtQuick.Controls 2.13
+import QtQuick.Controls.Material 2.12
 import QtQuick.Layouts 1.13
 import QtQuick.Window 2.13
 import "combine"
 import "offset"
 import "offsetisland"
 import "settings"
-import QtQuick.Controls.Material 2.12
 
 ApplicationWindow {
     id: mainWindow
-
-    Material.theme: Material.Light
-    Material.accent: Material.Indigo
-    Material.primary: Material.Indigo
-    Material.elevation: 5
-    Material.background: Material.White
-    Material.foreground: Material.Black
 
     function adjustFontSize(baseSize) {
         return baseSize * Screen.pixelDensity;
     }
 
+    Material.theme: Material.Light
+    Material.accent: Material.Blue
+    Material.primary: Material.Indigo
+    Material.elevation: 5
+    Material.background: Material.White
+    Material.foreground: Material.Black
     visible: true
     width: Screen.width - 200
     height: Screen.height - 200
@@ -55,8 +54,11 @@ ApplicationWindow {
 
                 DebuggerSettings {
                 }
+
             }
+
         }
+
     }
 
     header: TabBar {
@@ -77,5 +79,7 @@ ApplicationWindow {
         TabButton {
             text: "Debugger Settings"
         }
+
     }
+
 }

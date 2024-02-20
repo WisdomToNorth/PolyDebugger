@@ -26,7 +26,7 @@ PlineOffsetAlgorithmView::PlineOffsetAlgorithmView(QQuickItem *parent) :
     m_arcApproxError(0.005), mouse_pick_pt_(),
     m_vertexGrabbed(std::numeric_limits<std::size_t>::max()), m_interacting(false),
     m_showOrigPlineVertexes(true), m_showRawOffsetSegments(false), m_showRawOffsetPolyline(false),
-    m_showRawOffsetPlineVertexes(false), m_plineOffset(0.5), m_offsetCount(0),
+    m_showRawOffsetPlineVertexes(false), m_plineOffset(0.5), m_offsetCount(10),
     m_spatialIndexTarget(None), m_selfIntersectsTarget(None), m_finishedPolyline(NoFinishedPline),
     m_showEndPointIntersectCircles(false), m_showDualRawOffsetPolyline(false),
     m_showLastPrunedRawOffsets(false)
